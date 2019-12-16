@@ -5,8 +5,9 @@ import { AuthModule } from 'sigasac-utils';
 import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { SchoolModule } from './school/school.module';
+import { ThirdPartyModule } from './third-party/third-party.module';
 
 @Module({
-    imports: [AuthModule, CountryModule, LoginModule, SchoolModule]
+    imports: [AuthModule, CountryModule, LoginModule, SchoolModule, ThirdPartyModule]
 })
 export class AppModule {}
