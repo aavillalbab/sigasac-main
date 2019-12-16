@@ -3,7 +3,7 @@ import { ThirdPartyTypesController } from './third-party-types.controller';
 import { ThirdPartyTypesService } from './third-party-types.service';
 
 @Module({
-  controllers: [ThirdPartyTypesController],
-  providers: [ThirdPartyTypesService]
+    controllers: [ThirdPartyTypesController],
+    providers: [ThirdPartyTypesService]
 })
 export class ThirdPartyTypesModule {}

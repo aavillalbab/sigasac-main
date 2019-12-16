@@ -8,7 +8,9 @@ export class ThirdPartyService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const third = await connection.getRepository(ThirdParty).save(thirdParty);
+            const third = await connection
+                .getRepository(ThirdParty)
+                .save(thirdParty);
 
             return third;
         } catch (error) {
@@ -20,7 +22,10 @@ export class ThirdPartyService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const thirds = await connection.getRepository(ThirdParty).createQueryBuilder().getMany();
+            const thirds = await connection
+                .getRepository(ThirdParty)
+                .createQueryBuilder()
+                .getMany();
 
             return thirds;
         } catch (error) {

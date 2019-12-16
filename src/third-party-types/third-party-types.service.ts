@@ -9,7 +9,9 @@ export class ThirdPartyTypesService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const thirdParty = await connection.getRepository(ThirdPartyType).save(thirdPartyType);
+            const thirdParty = await connection
+                .getRepository(ThirdPartyType)
+                .save(thirdPartyType);
 
             return thirdParty;
         } catch (error) {
@@ -21,7 +23,10 @@ export class ThirdPartyTypesService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const thirdPartyTypes = await connection.getRepository(ThirdPartyType).createQueryBuilder().getMany();
+            const thirdPartyTypes = await connection
+                .getRepository(ThirdPartyType)
+                .createQueryBuilder()
+                .getMany();
 
             return thirdPartyTypes;
         } catch (error) {

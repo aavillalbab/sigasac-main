@@ -28,7 +28,7 @@ import { TypePersonService } from './type-person.service';
 @ApiTags('type-persons')
 @ApiBearerAuth()
 export class TypePersonController {
-    constructor(private readonly typePersonService: TypePersonService){}
+    constructor(private readonly typePersonService: TypePersonService) {}
 
     @Get()
     @ApiOperation({})

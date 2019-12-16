@@ -10,6 +10,14 @@ import { TypePersonModule } from './type-person/type-person.module';
 import { ThirdPartyTypesModule } from './third-party-types/third-party-types.module';
 
 @Module({
-    imports: [AuthModule, CountryModule, LoginModule, SchoolModule, ThirdPartyModule, TypePersonModule, ThirdPartyTypesModule]
+    imports: [
+        AuthModule,
+        CountryModule,
+        LoginModule,
+        SchoolModule,
+        ThirdPartyModule,
+        TypePersonModule,
+        ThirdPartyTypesModule
+    ]
 })
 export class AppModule {}

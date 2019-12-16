@@ -7,7 +7,10 @@ export class TypePersonService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const typePersons = await connection.getRepository(TypePerson).createQueryBuilder().getMany();
+            const typePersons = await connection
+                .getRepository(TypePerson)
+                .createQueryBuilder()
+                .getMany();
 
             return typePersons;
         } catch (error) {

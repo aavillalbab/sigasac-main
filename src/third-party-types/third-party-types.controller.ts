@@ -29,7 +29,9 @@ import { ThirdPartyTypeDto } from './dto';
 @ApiTags('third-party-types')
 @ApiBearerAuth()
 export class ThirdPartyTypesController {
-    constructor(private readonly thirdPartyTypeService: ThirdPartyTypesService) { }
+    constructor(
+        private readonly thirdPartyTypeService: ThirdPartyTypesService
+    ) {}
 
     @Post()
     @ApiConsumes('application/x-www-form-urlencoded')
