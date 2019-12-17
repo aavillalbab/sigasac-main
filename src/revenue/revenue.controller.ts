@@ -22,26 +22,25 @@ import {
 } from '@nestjs/swagger';
 
 import { AuthGuard } from 'sigasac-utils';
+import { RevenueService } from './revenue.service';
+import { RevenueDto } from './dto';
 
-import { VoucherService } from './voucher.service';
-import { VoucherDto } from './dto';
-
-@Controller('sigasac/v1/vouchers')
-@ApiTags('vouchers')
+@Controller('sigasac/v1/revenues')
+@ApiTags('revenues')
 @ApiBearerAuth()
-export class VoucherController {
-    constructor(private readonly voucherService: VoucherService) {}
+export class RevenueController {
+    constructor(private readonly revenueService: RevenueService) {}
 
     @Post()
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @Body() voucherDto: VoucherDto) {
+    async create(@Res() res: Response, @Body() revenueDto: RevenueDto) {
         try {
-            const voucher = await this.voucherService.create(voucherDto);
+            const revenue = await this.revenueService.create(revenueDto);
 
             res.status(HttpStatus.CREATED).send({
-                voucher
+                revenue
             });
         } catch (error) {
             if (error.message.statusCode) {
@@ -62,10 +61,10 @@ export class VoucherController {
     @UseGuards(AuthGuard('jwt'))
     async getAll(@Res() res: Response) {
         try {
-            const vouchers = await this.voucherService.getAll();
+            const revenues = await this.revenueService.getAll();
 
             res.status(HttpStatus.OK).send({
-                vouchers
+                revenues
             });
         } catch (error) {
             if (error.message.statusCode) {

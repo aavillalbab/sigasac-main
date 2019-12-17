@@ -10,6 +10,7 @@ import { TypePersonModule } from './type-person/type-person.module';
 import { ThirdPartyTypesModule } from './third-party-types/third-party-types.module';
 import { BankModule } from './bank/bank.module';
 import { VoucherModule } from './voucher/voucher.module';
+import { RevenueModule } from './revenue/revenue.module';
 
 @Module({
     imports: [
@@ -21,7 +22,8 @@ import { VoucherModule } from './voucher/voucher.module';
         ThirdPartyModule,
         ThirdPartyTypesModule,
         TypePersonModule,
-        VoucherModule
+        VoucherModule,
+        RevenueModule
     ]
 })
 export class AppModule {}
