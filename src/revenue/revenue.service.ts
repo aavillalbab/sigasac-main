@@ -9,7 +9,9 @@ export class RevenueService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const revenue = await connection.getRepository(Revenue).save(revenueDto);
+            const revenue = await connection
+                .getRepository(Revenue)
+                .save(revenueDto);
 
             return revenue;
         } catch (error) {

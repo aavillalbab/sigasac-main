@@ -13,9 +13,7 @@ export function userLogged(user: User): UserPayload {
         sub: user.id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        profileId: user.profileId,
-        profile: user.profile.name
+        phone: user.phone
     };
 }
 
@@ -29,8 +27,6 @@ export function userPayload(user: User): Payload {
         sub: user.id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        profileId: user.profileId,
-        profile: user.profile.description
+        phone: user.phone
     };
 }

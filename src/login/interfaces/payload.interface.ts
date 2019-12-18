@@ -4,6 +4,4 @@ export interface Payload {
     name: string;
     email: string;
     phone: string;
-    profileId: number;
-    profile: string;
 }

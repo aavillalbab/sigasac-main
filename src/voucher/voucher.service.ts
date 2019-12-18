@@ -9,7 +9,9 @@ export class VoucherService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const voucher = await connection.getRepository(Voucher).save(voucherDto);
+            const voucher = await connection
+                .getRepository(Voucher)
+                .save(voucherDto);
 
             return voucher;
         } catch (error) {
