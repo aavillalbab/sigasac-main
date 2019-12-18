@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException, Logger } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    Logger,
+    ConflictException
+} from '@nestjs/common';
 
-import { DatabaseProvider, School } from 'sigasac-db';
+import { DatabaseProvider, School, User } from 'sigasac-db';
 
 import { SchoolDto } from './dto';
 
@@ -98,15 +103,42 @@ export class SchoolService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const schools: School[] = await connection
-                .getRepository(School)
-                .createQueryBuilder('school')
-                .select(['school.id id', 'school.name "name"'])
-                .innerJoin('school.users', 'users')
-                .where('users.email = :email', { email })
-                .getRawMany();
+            const user: User = await connection
+                .getRepository(User)
+                .createQueryBuilder('user')
+                .leftJoinAndSelect('user.schoolProfileUser', 'spu')
+                .leftJoinAndSelect('spu.profile', 'profile')
+                .leftJoinAndSelect('spu.school', 'school')
+                .where('user.email = :email', { email })
+                .getOne();
 
-            if (!schools.length) {
+            let schools: School[];
+
+            if (user) {
+                schools = user.schoolProfileUser
+                    .map(spu => spu.school)
+                    .filter(s => s !== null);
+
+                const isSuperAdmin = user.schoolProfileUser
+                    .map(spu => spu.profileId)
+                    .includes(1);
+
+                if (isSuperAdmin && !schools.length) {
+                    schools = [];
+                }
+
+                if (!isSuperAdmin && !schools.length) {
+                    throw new ConflictException(
+                        `El usuario con correo ${email} no es super administardor y no tiene colegios asignados.`
+                    );
+                }
+
+                if (!isSuperAdmin && schools.length) {
+                    schools = schools;
+                }
+            }
+
+            if (!user) {
                 throw new NotFoundException(
                     `El usuario con correo ${email} no está registrado en nuestro sistema.`
                 );
