@@ -5,7 +5,13 @@ import {
     BadRequestException
 } from '@nestjs/common';
 
-import { DatabaseProvider, School, User } from 'sigasac-db';
+import {
+    DatabaseProvider,
+    School,
+    User,
+    SchoolProfileUser,
+    Profile
+} from 'sigasac-db';
 import { AuthService } from 'sigasac-utils';
 
 import { LoginDTO } from './dto';
@@ -50,31 +56,40 @@ export class LoginService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const user: User = await connection
-                .getRepository(User)
-                .createQueryBuilder('user')
+            const spu: SchoolProfileUser = await connection
+                .getRepository(SchoolProfileUser)
+                .createQueryBuilder('spu')
                 .addSelect('user.password')
-                .innerJoinAndSelect('user.profile', 'profile')
-                .where('user.email = :email', { email })
-                .andWhere('user.schoolId = :schoolId', { schoolId })
+                .innerJoinAndSelect('spu.user', 'user')
+                .innerJoinAndSelect('spu.profile', 'profile')
+                .where('spu.schoolId = :schoolId', { schoolId })
+                .andWhere('user.email = :email', { email })
+                .andWhere('user.state = :state', { state: 1 })
                 .getOne();
 
-            if (!user) {
+            let user: User;
+
+            if (spu) {
+                const user: User = spu.user;
+                const profile: Profile = spu.profile;
+
+                if (user) {
+                    if (User.isPassword(user.password, password)) {
+                        return user;
+                    }
+
+                    if (!User.isPassword(user.password, password)) {
+                        throw new BadRequestException(
+                            'email Y/O contraseña incorrectos.'
+                        );
+                    }
+                }
+            }
+
+            if (!spu) {
                 throw new NotFoundException(
                     `El usuario con correo ${email} no está registrado en nuestro sistema.`
                 );
-            }
-
-            if (user) {
-                if (User.isPassword(user.password, password)) {
-                    return user;
-                }
-
-                if (!User.isPassword(user.password, password)) {
-                    throw new BadRequestException(
-                        'email Y/O contraseña incorrectos.'
-                    );
-                }
             }
         } catch (error) {
             throw error;
