@@ -56,37 +56,35 @@ export class LoginService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const spu: SchoolProfileUser = await connection
-                .getRepository(SchoolProfileUser)
-                .createQueryBuilder('spu')
+            const user: User = await connection
+                .getRepository(User)
+                .createQueryBuilder('user')
                 .addSelect('user.password')
-                .innerJoinAndSelect('spu.user', 'user')
-                .innerJoinAndSelect('spu.profile', 'profile')
-                .where('spu.schoolId = :schoolId', { schoolId })
-                .andWhere('user.email = :email', { email })
+                .leftJoinAndSelect('user.profiles', 'profiles')
+                .leftJoinAndSelect('profiles.menus', 'menus')
+                .leftJoinAndSelect('menus.permissions', 'permissions')
+                .leftJoin('user.schools', 'schools', 'schools.id = :schoolId', {
+                    schoolId
+                })
+                .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .getOne();
 
-            let user: User;
+            Logger.log(user);
 
-            if (spu) {
-                const user: User = spu.user;
-                const profile: Profile = spu.profile;
+            if (user) {
+                if (User.isPassword(user.password, password)) {
+                    return user;
+                }
 
-                if (user) {
-                    if (User.isPassword(user.password, password)) {
-                        return user;
-                    }
-
-                    if (!User.isPassword(user.password, password)) {
-                        throw new BadRequestException(
-                            'email Y/O contraseña incorrectos.'
-                        );
-                    }
+                if (!User.isPassword(user.password, password)) {
+                    throw new BadRequestException(
+                        'email Y/O contraseña incorrectos.'
+                    );
                 }
             }
 
-            if (!spu) {
+            if (!user) {
                 throw new NotFoundException(
                     `El usuario con correo ${email} no está registrado en nuestro sistema.`
                 );
