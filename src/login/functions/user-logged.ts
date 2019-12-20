@@ -27,6 +27,19 @@ export function userPayload(user: User): Payload {
         sub: user.id,
         name: user.name,
         email: user.email,
-        phone: user.phone
+        phone: user.phone,
+        profile: user.profiles[0].description,
+        menus: user.profiles[0].menus.map(m => {
+            return {
+                id: m.id,
+                name: m.name,
+                permissions: m.permissions.map(p => {
+                    return {
+                        id: p.id,
+                        name: p.name
+                    };
+                })
+            };
+        })
     };
 }
