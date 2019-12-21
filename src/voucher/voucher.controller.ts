@@ -25,6 +25,7 @@ import { AuthGuard } from 'sigasac-utils';
 
 import { VoucherService } from './voucher.service';
 import { VoucherDto } from './dto';
+import { BankDto } from '../bank/dto';
 
 @Controller('sigasac/v1/vouchers')
 @ApiTags('vouchers')
@@ -66,6 +67,63 @@ export class VoucherController {
 
             res.status(HttpStatus.OK).send({
                 vouchers
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Put(':voucherId')
+    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async update(
+        @Res() res: Response,
+        @Param('voucherId') voucherId: number,
+        @Body() voucherDto: VoucherDto
+    ) {
+        try {
+            await this.voucherService.update(voucherId, voucherDto);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Actualización exitosa!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':voucherId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async changeState(
+        @Res() res: Response,
+        @Param('voucherId') voucherId: number,
+        @Body('state') state: number
+    ) {
+        try {
+            await this.voucherService.changeState(voucherId, state);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Cambio de estado exitoso!'
             });
         } catch (error) {
             if (error.message.statusCode) {
