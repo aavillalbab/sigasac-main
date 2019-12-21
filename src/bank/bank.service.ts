@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseProvider, Bank } from 'sigasac-db';
+import { DatabaseProvider, Bank, School } from 'sigasac-db';
 import { BankDto } from './dto';
+import { tryCatch } from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class BankService {
@@ -27,6 +28,40 @@ export class BankService {
                 .getMany();
 
             return banks;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async update(id: number, bankDto: BankDto) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(Bank)
+                .set(bankDto)
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async changeState(id: number, state: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(Bank)
+                .set({ state })
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
         } catch (error) {
             throw error;
         }

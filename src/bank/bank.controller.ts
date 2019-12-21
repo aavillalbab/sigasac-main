@@ -80,4 +80,61 @@ export class BankController {
             });
         }
     }
+
+    @Put(':bankId')
+    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async update(
+        @Res() res: Response,
+        @Param('bankId') bankId: number,
+        @Body() bankDto: BankDto
+    ) {
+        try {
+            await this.bankService.update(bankId, bankDto);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Actualización exitosa!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':bankId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async changeState(
+        @Res() res: Response,
+        @Param('bankId') bankId: number,
+        @Body('state') state: number
+    ) {
+        try {
+            await this.bankService.changeState(bankId, state);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Cambio de estado exitoso!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
 }
