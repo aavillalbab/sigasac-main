@@ -24,6 +24,7 @@ import {
 import { AuthGuard } from 'sigasac-utils';
 import { RevenueService } from './revenue.service';
 import { RevenueDto } from './dto';
+import { BankDto } from '../bank/dto';
 
 @Controller('sigasac/v1/revenues')
 @ApiTags('revenues')
@@ -65,6 +66,63 @@ export class RevenueController {
 
             res.status(HttpStatus.OK).send({
                 revenues
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Put(':revenueId')
+    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async update(
+        @Res() res: Response,
+        @Param('revenueId') revenueId: number,
+        @Body() revenueDto: RevenueDto
+    ) {
+        try {
+            await this.revenueService.update(revenueId, revenueDto);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Actualización exitosa!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':revenueId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async changeState(
+        @Res() res: Response,
+        @Param('revenueId') revenueId: number,
+        @Body('state') state: number
+    ) {
+        try {
+            await this.revenueService.changeState(revenueId, state);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Cambio de estado exitoso!'
             });
         } catch (error) {
             if (error.message.statusCode) {

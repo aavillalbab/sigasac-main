@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseProvider, Revenue } from 'sigasac-db';
+import { Bank, DatabaseProvider, Revenue } from 'sigasac-db';
 import { RevenueDto } from './dto';
 
 @Injectable()
@@ -29,6 +29,40 @@ export class RevenueService {
                 .getMany();
 
             return revenues;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async update(id: number, revenueDto: RevenueDto) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(Revenue)
+                .set(revenueDto)
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async changeState(id: number, state: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(Bank)
+                .set({ state })
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
         } catch (error) {
             throw error;
         }
