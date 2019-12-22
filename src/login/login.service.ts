@@ -54,7 +54,9 @@ export class LoginService {
         schoolId?: number
     ): Promise<User> {
         try {
-            const SchoolCondition = schoolId ? `schools.id = ${schoolId}` : 'schools.id IS NULL';
+            const SchoolCondition = schoolId
+                ? `schools.id = ${schoolId}`
+                : 'schools.id IS NULL';
 
             const connection = await DatabaseProvider.getConnection();
 
