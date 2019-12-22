@@ -24,7 +24,6 @@ import {
 import { AuthGuard } from 'sigasac-utils';
 import { RevenueService } from './revenue.service';
 import { RevenueDto } from './dto';
-import { BankDto } from '../bank/dto';
 
 @Controller('sigasac/v1/revenues')
 @ApiTags('revenues')

@@ -6,9 +6,8 @@ export class LoginDTO {
     @IsEmail()
     email: string;
 
-    @ApiProperty()
-    @IsNotEmpty()
-    schoolId: number;
+    @ApiProperty({required: false})
+    schoolId?: number;
 
     @ApiProperty()
     @IsNotEmpty()

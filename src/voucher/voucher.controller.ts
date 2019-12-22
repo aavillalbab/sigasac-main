@@ -25,7 +25,6 @@ import { AuthGuard } from 'sigasac-utils';
 
 import { VoucherService } from './voucher.service';
 import { VoucherDto } from './dto';
-import { BankDto } from '../bank/dto';
 
 @Controller('sigasac/v1/vouchers')
 @ApiTags('vouchers')

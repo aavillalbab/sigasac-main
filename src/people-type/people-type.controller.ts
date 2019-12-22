@@ -22,13 +22,13 @@ import {
 } from '@nestjs/swagger';
 
 import { AuthGuard } from 'sigasac-utils';
-import { TypePersonService } from './type-person.service';
+import { PeopleTypeService } from './people-type.service';
 
 @Controller('sigasac/v1/type-persons')
 @ApiTags('type-persons')
 @ApiBearerAuth()
-export class TypePersonController {
-    constructor(private readonly typePersonService: TypePersonService) {}
+export class PeopleTypeController {
+    constructor(private readonly typePersonService: PeopleTypeService) {}
 
     @Get()
     @ApiOperation({})

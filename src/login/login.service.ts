@@ -51,9 +51,11 @@ export class LoginService {
     private async getUserByEmailAndSchool(
         email: string,
         password: string,
-        schoolId: number
+        schoolId?: number
     ): Promise<User> {
         try {
+            const SchoolCondition = schoolId ? `schools.id = ${schoolId}` : 'schools.id IS NULL';
+
             const connection = await DatabaseProvider.getConnection();
 
             const user: User = await connection
@@ -63,14 +65,11 @@ export class LoginService {
                 .leftJoinAndSelect('user.profiles', 'profiles')
                 .leftJoinAndSelect('profiles.menus', 'menus')
                 .leftJoinAndSelect('menus.permissions', 'permissions')
-                .leftJoin('user.schools', 'schools', 'schools.id = :schoolId', {
-                    schoolId
-                })
+                .leftJoin('user.schools', 'schools')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
+                .andWhere(SchoolCondition)
                 .getOne();
-
-            Logger.log(user);
 
             if (user) {
                 if (User.isPassword(user.password, password)) {

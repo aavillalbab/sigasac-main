@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Bank, DatabaseProvider, Revenue } from 'sigasac-db';
+import { DatabaseProvider, Revenue } from 'sigasac-db';
 import { RevenueDto } from './dto';
 
 @Injectable()
@@ -57,7 +57,7 @@ export class RevenueService {
 
             const result: any = await connection
                 .createQueryBuilder()
-                .update(Bank)
+                .update(Revenue)
                 .set({ state })
                 .where('id = :id', { id })
                 .execute();

@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseProvider, Bank, School } from 'sigasac-db';
+import { DatabaseProvider, Bank } from 'sigasac-db';
 import { BankDto } from './dto';
-import { tryCatch } from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class BankService {

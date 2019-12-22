@@ -5,7 +5,7 @@ export class RevenueDto {
     description: string;
 
     @ApiProperty({ required: false })
-    classification: string;
+    classification: number;
 
     @ApiProperty({ required: false })
     code: string;

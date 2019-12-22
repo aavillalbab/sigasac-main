@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseProvider, TypePerson } from 'sigasac-db';
+import { DatabaseProvider, PeopleType } from 'sigasac-db';
 
 @Injectable()
-export class TypePersonService {
+export class PeopleTypeService {
     async getAll() {
         try {
             const connection = await DatabaseProvider.getConnection();
 
             const typePersons = await connection
-                .getRepository(TypePerson)
+                .getRepository(PeopleType)
                 .createQueryBuilder()
                 .getMany();
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Bank, DatabaseProvider, Voucher } from 'sigasac-db';
+import { DatabaseProvider, Voucher } from 'sigasac-db';
 import { VoucherDto } from './dto';
 
 @Injectable()
