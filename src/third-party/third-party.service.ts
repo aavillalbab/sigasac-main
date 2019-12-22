@@ -32,4 +32,54 @@ export class ThirdPartyService {
             throw error;
         }
     }
+
+    async getById(id: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const third = await connection
+                .getRepository(ThirdParty)
+                .createQueryBuilder('tp')
+                .where('tp.id = :id', { id })
+                .getOne();
+
+            return third;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async update(id: number, thirdParty: ThirdPartyDto) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(ThirdParty)
+                .set(thirdParty)
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async changeState(id: number, state: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(ThirdParty)
+                .set({ state })
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

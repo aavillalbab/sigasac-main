@@ -80,4 +80,85 @@ export class ThirdPartyController {
             });
         }
     }
+
+    @Get(':tpId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async getById(@Res() res: Response, @Param('tpId') tpId: number) {
+        try {
+            const thirdPartie = await this.thirdPartyService.getById(tpId);
+
+            res.status(HttpStatus.OK).send({
+                thirdPartie
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Put(':tpId')
+    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async update(
+        @Res() res: Response,
+        @Param('tpId') tpId: number,
+        @Body() third: ThirdPartyDto
+    ) {
+        try {
+            await this.thirdPartyService.update(tpId, third);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Actualización exitosa!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':tpId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async changeState(
+        @Res() res: Response,
+        @Param('tpId') tpId: number,
+        @Body('state') state: number
+    ) {
+        try {
+            await this.thirdPartyService.changeState(tpId, state);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Cambio de estado exitoso!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
 }
