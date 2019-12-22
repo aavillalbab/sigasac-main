@@ -53,7 +53,10 @@ export class SchoolService {
             if (!email) {
                 schools = await connection
                     .getRepository(School)
-                    .createQueryBuilder()
+                    .createQueryBuilder('school')
+                    .innerJoinAndSelect('school.city', 'city')
+                    .innerJoinAndSelect('city.department', 'department')
+                    .innerJoinAndSelect('department.country', 'country')
                     .getMany();
             }
 
@@ -69,8 +72,11 @@ export class SchoolService {
 
             const school: School = await connection
                 .getRepository(School)
-                .createQueryBuilder()
-                .where('id = :id', { id })
+                .createQueryBuilder('school')
+                .innerJoinAndSelect('school.city', 'city')
+                .innerJoinAndSelect('city.department', 'department')
+                .innerJoinAndSelect('department.country', 'country')
+                .where('school.id = :id', { id })
                 .getOne();
 
             return school;
