@@ -66,12 +66,16 @@ export class LoginService {
                 .addSelect('user.password')
                 .leftJoinAndSelect('user.profiles', 'profiles')
                 .leftJoinAndSelect('profiles.menus', 'menus')
+                .leftJoinAndSelect('menus.submenus', 'submenus')
+                .leftJoinAndSelect('submenus.permissions', '_permissions')
                 .leftJoinAndSelect('menus.permissions', 'permissions')
                 .leftJoin('user.schools', 'schools')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)
                 .getOne();
+
+                Logger.log(user);
 
             if (user) {
                 if (User.isPassword(user.password, password)) {
