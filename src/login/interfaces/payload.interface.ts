@@ -3,10 +3,17 @@ interface Permission {
     name: string;
 }
 
+interface SubMenu {
+    id: number;
+    name: string;
+    permissions: Permission[];
+}
+
 interface Menu {
     id: number;
     name: string;
     permissions: Permission[];
+    submenus: SubMenu[];
 }
 
 export interface Payload {

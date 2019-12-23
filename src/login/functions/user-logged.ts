@@ -38,6 +38,18 @@ export function userPayload(user: User): Payload {
                         id: p.id,
                         name: p.name
                     };
+                }),
+                submenus: m.submenus.map(sm => {
+                    return {
+                        id: sm.id,
+                        name: sm.name,
+                        permissions: sm.permissions.map(p => {
+                            return {
+                                id: p.id,
+                                name: p.name
+                            };
+                        })
+                    }
                 })
             };
         })
