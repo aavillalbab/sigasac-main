@@ -33,4 +33,21 @@ export class ThirdPartyTypesService {
             throw error;
         }
     }
+
+    async update(id: number, thirdPartyType: ThirdPartyTypeDto) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+            .createQueryBuilder()
+            .update(ThirdPartyType)
+            .set(thirdPartyType)
+            .where('id = :id', { id })
+            .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

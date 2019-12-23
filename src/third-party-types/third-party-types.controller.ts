@@ -81,4 +81,33 @@ export class ThirdPartyTypesController {
             });
         }
     }
+
+    @Put(':thirdPartyId')
+    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async update(
+        @Res() res: Response,
+        @Param('thirdPartyId') thirdPartyId: number,
+        @Body() third: ThirdPartyTypeDto
+    ) {
+        try {
+            await this.thirdPartyTypeService.update(thirdPartyId, third);
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                response: 'Actualización exitosa!'
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
 }
