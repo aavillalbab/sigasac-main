@@ -75,8 +75,6 @@ export class LoginService {
                 .andWhere(SchoolCondition)
                 .getOne();
 
-                Logger.log(user);
-
             if (user) {
                 if (User.isPassword(user.password, password)) {
                     return user;
