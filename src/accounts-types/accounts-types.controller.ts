@@ -1,18 +1,8 @@
-import {
-    Controller,
-    Res,
-    HttpStatus,
-    Get,
-    UseGuards
-} from '@nestjs/common';
+import { Controller, Res, HttpStatus, Get, UseGuards } from '@nestjs/common';
 
 import { Response } from 'express';
 
-import {
-    ApiTags,
-    ApiOperation,
-    ApiBearerAuth
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
 import { AuthGuard } from 'sigasac-utils';
 

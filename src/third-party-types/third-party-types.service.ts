@@ -39,11 +39,11 @@ export class ThirdPartyTypesService {
             const connection = await DatabaseProvider.getConnection();
 
             const result: any = await connection
-            .createQueryBuilder()
-            .update(ThirdPartyType)
-            .set(thirdPartyType)
-            .where('id = :id', { id })
-            .execute();
+                .createQueryBuilder()
+                .update(ThirdPartyType)
+                .set(thirdPartyType)
+                .where('id = :id', { id })
+                .execute();
 
             return result;
         } catch (error) {

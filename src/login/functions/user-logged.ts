@@ -49,7 +49,7 @@ export function userPayload(user: User): Payload {
                                 name: p.name
                             };
                         })
-                    }
+                    };
                 })
             };
         })
