@@ -24,6 +24,7 @@ import {
 import { AuthGuard, User } from 'sigasac-utils';
 import { CampusService } from './campus.service';
 import { CampusDto } from './dto';
+import { ChangeStateDto } from 'src/bank/dto';
 
 @Controller('sigasac/v1/campus')
 @ApiTags('campus')
@@ -145,10 +146,13 @@ export class CampusController {
     async changeState(
         @Res() res: Response,
         @Param('campusId') campusId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.campusService.changeState(campusId, state);
+            await this.campusService.changeState(
+                campusId,
+                changeStateDto.state
+            );
 
             res.status(HttpStatus.OK).send({
                 message: 'Cambio de estado exitoso'

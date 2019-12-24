@@ -25,6 +25,7 @@ import { AuthGuard, User } from 'sigasac-utils';
 
 import { ThirdPartyService } from './third-party.service';
 import { ThirdPartyDto } from './dto';
+import { ChangeStateDto } from 'src/bank/dto';
 
 @Controller('sigasac/v1/third-parties')
 @ApiTags('third-parties')
@@ -146,10 +147,13 @@ export class ThirdPartyController {
     async changeState(
         @Res() res: Response,
         @Param('tpId') tpId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.thirdPartyService.changeState(tpId, state);
+            await this.thirdPartyService.changeState(
+                tpId,
+                changeStateDto.state
+            );
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Cambio de estado exitoso!'

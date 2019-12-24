@@ -24,6 +24,7 @@ import {
 import { AuthGuard } from 'sigasac-utils';
 import { RevenueService } from './revenue.service';
 import { RevenueDto } from './dto';
+import { ChangeStateDto } from 'src/bank/dto';
 
 @Controller('sigasac/v1/revenues')
 @ApiTags('revenues')
@@ -115,10 +116,13 @@ export class RevenueController {
     async changeState(
         @Res() res: Response,
         @Param('revenueId') revenueId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.revenueService.changeState(revenueId, state);
+            await this.revenueService.changeState(
+                revenueId,
+                changeStateDto.state
+            );
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Cambio de estado exitoso!'

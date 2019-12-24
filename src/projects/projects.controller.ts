@@ -24,6 +24,7 @@ import {
 import { AuthGuard, User } from 'sigasac-utils';
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto';
+import { ChangeStateDto } from 'src/bank/dto';
 
 @Controller('sigasac/v1/projects')
 @ApiTags('projects')
@@ -145,10 +146,13 @@ export class ProjectsController {
     async changeState(
         @Res() res: Response,
         @Param('projectId') projectId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.projectService.changeState(projectId, state);
+            await this.projectService.changeState(
+                projectId,
+                changeStateDto.state
+            );
 
             res.status(HttpStatus.OK).send({
                 message: 'Cambio de estado exitoso'

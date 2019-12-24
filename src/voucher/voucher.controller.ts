@@ -25,6 +25,7 @@ import { AuthGuard } from 'sigasac-utils';
 
 import { VoucherService } from './voucher.service';
 import { VoucherDto } from './dto';
+import { ChangeStateDto } from 'src/bank/dto';
 
 @Controller('sigasac/v1/vouchers')
 @ApiTags('vouchers')
@@ -116,10 +117,13 @@ export class VoucherController {
     async changeState(
         @Res() res: Response,
         @Param('voucherId') voucherId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.voucherService.changeState(voucherId, state);
+            await this.voucherService.changeState(
+                voucherId,
+                changeStateDto.state
+            );
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Cambio de estado exitoso!'
