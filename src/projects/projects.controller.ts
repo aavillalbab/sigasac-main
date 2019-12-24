@@ -142,6 +142,7 @@ export class ProjectsController {
 
     @Patch(':projectId')
     @ApiOperation({})
+    @ApiConsumes('application/x-www-form-urlencoded')
     @UseGuards(AuthGuard('jwt'))
     async changeState(
         @Res() res: Response,
