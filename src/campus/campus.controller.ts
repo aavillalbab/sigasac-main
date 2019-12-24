@@ -35,10 +35,14 @@ export class CampusController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @User('schoolId') schoolId: number, @Body() campusDto: CampusDto) {
+    async create(
+        @Res() res: Response,
+        @User('schoolId') schoolId: number,
+        @Body() campusDto: CampusDto
+    ) {
         try {
             campusDto.schoolId = schoolId;
-            
+
             const campus = await this.campusService.create(campusDto);
 
             res.status(HttpStatus.CREATED).send({

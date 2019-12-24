@@ -36,10 +36,14 @@ export class ThirdPartyController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @User('schoolId') schoolId: number,  @Body() third: ThirdPartyDto) {
+    async create(
+        @Res() res: Response,
+        @User('schoolId') schoolId: number,
+        @Body() third: ThirdPartyDto
+    ) {
         try {
             third.schoolId = schoolId;
-            
+
             const t = await this.thirdPartyService.create(third);
 
             res.status(HttpStatus.CREATED).send({

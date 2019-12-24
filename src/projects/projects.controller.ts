@@ -35,7 +35,11 @@ export class ProjectsController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @User('schoolId') schoolId: number, @Body() projectDto: ProjectDto) {
+    async create(
+        @Res() res: Response,
+        @User('schoolId') schoolId: number,
+        @Body() projectDto: ProjectDto
+    ) {
         try {
             projectDto.schoolId = schoolId;
 
