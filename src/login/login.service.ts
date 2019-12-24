@@ -69,7 +69,7 @@ export class LoginService {
                 .leftJoinAndSelect('menus.submenus', 'submenus')
                 .leftJoinAndSelect('submenus.permissions', '_permissions')
                 .leftJoinAndSelect('menus.permissions', 'permissions')
-                .leftJoin('user.schools', 'schools')
+                .leftJoinAndSelect('user.schools', 'schools')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)

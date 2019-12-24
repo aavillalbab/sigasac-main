@@ -23,5 +23,6 @@ export interface Payload {
     email: string;
     phone: string;
     profile: string;
+    schoolId: number;
     menus: Menu[];
 }
