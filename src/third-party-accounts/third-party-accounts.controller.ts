@@ -23,7 +23,7 @@ import {
 import { AuthGuard, User } from 'sigasac-utils';
 
 import { ThirdPartyAccountsService } from './third-party-accounts.service';
-import { ThirdPartyAccountDto } from './dto';
+import { ThirdPartyAccountDto, ChangeStateDto } from './dto';
 
 @Controller('sigasac/v1/third-party-accounts')
 @ApiBearerAuth()
@@ -155,12 +155,12 @@ export class ThirdPartyAccountsController {
     async changeState(
         @Res() res: Response,
         @Param('thirdPartyAccountId') thirdPartyAccountId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
             await this.thirdPartyAccountsService.changeState(
                 thirdPartyAccountId,
-                state
+                changeStateDto.state
             );
 
             res.status(HttpStatus.NO_CONTENT).send({
