@@ -24,7 +24,7 @@ import {
 import { AuthGuard } from 'sigasac-utils';
 
 import { BankService } from './bank.service';
-import { BankDto } from './dto';
+import { BankDto, ChangeStateDto } from './dto';
 
 @Controller('sigasac/v1/banks')
 @ApiTags('banks')
@@ -116,10 +116,10 @@ export class BankController {
     async changeState(
         @Res() res: Response,
         @Param('bankId') bankId: number,
-        @Body('state') state: number
+        @Body() changeStateDto: ChangeStateDto
     ) {
         try {
-            await this.bankService.changeState(bankId, state);
+            await this.bankService.changeState(bankId, changeStateDto.state);
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Cambio de estado exitoso!'
