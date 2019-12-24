@@ -118,16 +118,40 @@ export class ProjectsController {
     @Get(':projectId')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
+    async getById(@Res() res: Response, @Param('projectId') projectId: number) {
+        try {
+            const project = await this.projectService.getById(projectId);
+
+            res.status(HttpStatus.OK).send({
+                project
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':projectId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
     async changeState(
         @Res() res: Response,
         @Param('projectId') projectId: number,
         @Body('state') state: number
     ) {
         try {
-            const project = await this.projectService.getById(projectId);
+            await this.projectService.changeState(projectId, state);
 
             res.status(HttpStatus.OK).send({
-                project
+                message: 'Cambio de estado exitoso'
             });
         } catch (error) {
             if (error.message.statusCode) {

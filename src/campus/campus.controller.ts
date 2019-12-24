@@ -118,16 +118,40 @@ export class CampusController {
     @Get(':campusId')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
+    async getById(@Res() res: Response, @Param('campusId') campusId: number) {
+        try {
+            const campus = await this.campusService.getById(campusId);
+
+            res.status(HttpStatus.OK).send({
+                campus
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':campusId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
     async changeState(
         @Res() res: Response,
         @Param('campusId') campusId: number,
         @Body('state') state: number
     ) {
         try {
-            const campus = await this.campusService.getById(campusId);
+            await this.campusService.changeState(campusId, state);
 
             res.status(HttpStatus.OK).send({
-                campus
+                message: 'Cambio de estado exitoso'
             });
         } catch (error) {
             if (error.message.statusCode) {

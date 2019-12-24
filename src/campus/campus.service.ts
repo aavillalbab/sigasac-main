@@ -58,4 +58,21 @@ export class CampusService {
             throw error;
         }
     }
+
+    async changeState(id: number, state: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const result: any = await connection
+                .createQueryBuilder()
+                .update(Campus)
+                .set({ state })
+                .where('id = :id', { id })
+                .execute();
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
