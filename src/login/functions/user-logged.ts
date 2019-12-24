@@ -28,8 +28,8 @@ export function userPayload(user: User): Payload {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        profile: user.profiles[0].description,
-        schoolId: user.schools[0].id,
+        role: user.profiles[0].description,
+        schoolId: user.schools.length ? user.schools[0].id : null,
         menus: user.profiles[0].menus.map(m => {
             return {
                 id: m.id,

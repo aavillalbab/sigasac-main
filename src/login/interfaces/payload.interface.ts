@@ -22,7 +22,7 @@ export interface Payload {
     name: string;
     email: string;
     phone: string;
-    profile: string;
+    role: string;
     schoolId: number;
     menus: Menu[];
 }
