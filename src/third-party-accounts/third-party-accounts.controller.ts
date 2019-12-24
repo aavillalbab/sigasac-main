@@ -149,6 +149,7 @@ export class ThirdPartyAccountsController {
     }
 
     @Patch(':thirdPartyAccountId')
+    @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
     async changeState(
