@@ -24,7 +24,7 @@ export class SingleAccountPlanService {
 
             const projects = await connection
                 .getRepository(SingleAccountPlan)
-                .find();
+                .find({ order: { id: 'ASC' } });
 
             return projects;
         } catch (error) {
