@@ -73,7 +73,7 @@ export class SchoolService {
             const school: School = await connection
                 .getRepository(School)
                 .createQueryBuilder('school')
-                .innerJoinAndSelect('school.city', 'city')
+                .innerJoinAndSelect('school.town', 'city')
                 .innerJoinAndSelect('city.department', 'department')
                 .innerJoinAndSelect('department.country', 'country')
                 .where('school.id = :id', { id })
