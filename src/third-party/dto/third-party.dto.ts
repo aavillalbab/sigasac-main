@@ -69,4 +69,6 @@ export class ThirdPartyDto {
 
     @ApiProperty({ required: false })
     thirdPartyTypeId?: number;
+
+    schoolId: number;
 }

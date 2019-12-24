@@ -21,7 +21,7 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, User } from 'sigasac-utils';
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto';
 
@@ -35,8 +35,10 @@ export class ProjectsController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @Body() projectDto: ProjectDto) {
+    async create(@Res() res: Response, @User('schoolId') schoolId: number, @Body() projectDto: ProjectDto) {
         try {
+            projectDto.schoolId = schoolId;
+
             const project = await this.projectService.create(projectDto);
 
             res.status(HttpStatus.CREATED).send({

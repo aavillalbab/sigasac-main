@@ -7,6 +7,5 @@ export class CampusDto {
     @ApiProperty()
     name: string;
 
-    @ApiProperty()
     schoolId: number;
 }

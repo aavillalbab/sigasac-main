@@ -21,7 +21,7 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, User } from 'sigasac-utils';
 
 import { ThirdPartyService } from './third-party.service';
 import { ThirdPartyDto } from './dto';
@@ -36,8 +36,10 @@ export class ThirdPartyController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @Body() third: ThirdPartyDto) {
+    async create(@Res() res: Response, @User('schoolId') schoolId: number,  @Body() third: ThirdPartyDto) {
         try {
+            third.schoolId = schoolId;
+            
             const t = await this.thirdPartyService.create(third);
 
             res.status(HttpStatus.CREATED).send({

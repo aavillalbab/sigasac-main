@@ -7,6 +7,5 @@ export class ProjectDto {
     @ApiProperty()
     description: string;
 
-    @ApiProperty()
     schoolId: number;
 }
