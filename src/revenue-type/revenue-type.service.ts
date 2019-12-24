@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseProvider } from 'sigasac-db';
-import { RevenueType } from 'sigasac-db/src/entities/RevenueType';
+import { DatabaseProvider, RevenueType } from 'sigasac-db';
 
 @Injectable()
 export class RevenueTypeService {
