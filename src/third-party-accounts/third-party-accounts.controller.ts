@@ -7,7 +7,8 @@ import {
     Param,
     Put,
     Get,
-    UseGuards
+    UseGuards,
+    Patch
 } from '@nestjs/common';
 
 import { Response } from 'express';
@@ -121,7 +122,7 @@ export class ThirdPartyAccountsController {
     @Get(':thirdPartyAccountId')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async changeState(
+    async getById(
         @Res() res: Response,
         @Param('thirdPartyAccountId') thirdPartyAccountId: number
     ) {
@@ -132,6 +133,37 @@ export class ThirdPartyAccountsController {
 
             res.status(HttpStatus.OK).send({
                 thirdPartyAccount
+            });
+        } catch (error) {
+            if (error.message.statusCode) {
+                return res.status(error.message.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: error.message,
+                stack: error.stack
+            });
+        }
+    }
+
+    @Patch(':thirdPartyAccountId')
+    @ApiOperation({})
+    @UseGuards(AuthGuard('jwt'))
+    async changeState(
+        @Res() res: Response,
+        @Param('thirdPartyAccountId') thirdPartyAccountId: number,
+        @Body('state') state: number
+    ) {
+        try {
+            await this.thirdPartyAccountsService.changeState(
+                thirdPartyAccountId,
+                state
+            );
+
+            res.status(HttpStatus.NO_CONTENT).send({
+                message: 'Cambio de estado exitoso'
             });
         } catch (error) {
             if (error.message.statusCode) {
