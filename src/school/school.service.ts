@@ -54,7 +54,7 @@ export class SchoolService {
                 schools = await connection
                     .getRepository(School)
                     .createQueryBuilder('school')
-                    .innerJoinAndSelect('school.city', 'city')
+                    .innerJoinAndSelect('school.town', 'city')
                     .innerJoinAndSelect('city.department', 'department')
                     .innerJoinAndSelect('department.country', 'country')
                     .getMany();
