@@ -11,7 +11,9 @@ import { NatureDocumentsService } from './nature-documents.service';
 @ApiBearerAuth()
 @ApiTags('nature-documents')
 export class NatureDocumentsController {
-    constructor(private readonly natureDocumentsService: NatureDocumentsService) {}
+    constructor(
+        private readonly natureDocumentsService: NatureDocumentsService
+    ) {}
 
     @Get()
     @ApiOperation({})

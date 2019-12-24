@@ -17,6 +17,7 @@ import { RevenueModule } from './revenue/revenue.module';
 import { ThirdPartyTypesModule } from './third-party-types/third-party-types.module';
 import { ThirdPartyModule } from './third-party/third-party.module';
 import { VoucherModule } from './voucher/voucher.module';
+import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-accounts.module';
 
 @Module({
     imports: [
@@ -35,7 +36,8 @@ import { VoucherModule } from './voucher/voucher.module';
         SchoolModule,
         ThirdPartyModule,
         ThirdPartyTypesModule,
-        VoucherModule
+        VoucherModule,
+        ThirdPartyAccountsModule
     ]
 })
 export class AppModule {}
