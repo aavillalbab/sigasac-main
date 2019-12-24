@@ -27,7 +27,7 @@ import { RegimeService } from './regime.service';
 
 @Controller('sigasac/v1/regimes')
 @ApiBearerAuth()
-@ApiTags('rigimes')
+@ApiTags('regimes')
 export class RegimeController {
     constructor(private readonly regimeService: RegimeService) {}
 
