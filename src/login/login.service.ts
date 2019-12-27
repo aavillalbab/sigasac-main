@@ -73,6 +73,7 @@ export class LoginService {
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)
+                .andWhere('menus.father IS NULL')
                 .getOne();
 
             if (user) {
