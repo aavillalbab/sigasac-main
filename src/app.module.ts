@@ -20,6 +20,7 @@ import { ThirdPartyTypesModule } from './third-party-types/third-party-types.mod
 import { ThirdPartyModule } from './third-party/third-party.module';
 import { VoucherModule } from './voucher/voucher.module';
 import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-accounts.module';
+import { BudgetAccountsModule } from './budget-accounts/budget-accounts.module';
 
 @Module({
     imports: [
@@ -41,7 +42,8 @@ import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-acc
         ThirdPartyModule,
         ThirdPartyTypesModule,
         VoucherModule,
-        ThirdPartyAccountsModule
+        ThirdPartyAccountsModule,
+        BudgetAccountsModule
     ]
 })
 export class AppModule {}
