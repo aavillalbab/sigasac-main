@@ -31,7 +31,9 @@ import { ChangeStateDto } from 'src/bank/dto';
 @ApiTags('school-bank-accounts')
 @ApiBearerAuth()
 export class SchoolBankAccountsController {
-    constructor(private readonly schoolBankAccountService: SchoolBankAccountsService) {}
+    constructor(
+        private readonly schoolBankAccountService: SchoolBankAccountsService
+    ) {}
 
     @Post()
     @ApiConsumes('application/x-www-form-urlencoded')
@@ -45,7 +47,9 @@ export class SchoolBankAccountsController {
         try {
             schoolBankAccountDto.schoolId = schoolId;
 
-            const schoolBankAccount = await this.schoolBankAccountService.create(schoolBankAccountDto);
+            const schoolBankAccount = await this.schoolBankAccountService.create(
+                schoolBankAccountDto
+            );
 
             res.status(HttpStatus.CREATED).send({
                 schoolBankAccount
@@ -98,7 +102,10 @@ export class SchoolBankAccountsController {
         @Body() schoolBankAccountDto: SchoolBankAccountDto
     ) {
         try {
-            await this.schoolBankAccountService.update(schoolBankAccountId, schoolBankAccountDto);
+            await this.schoolBankAccountService.update(
+                schoolBankAccountId,
+                schoolBankAccountDto
+            );
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Actualización exitosa!'
@@ -120,9 +127,14 @@ export class SchoolBankAccountsController {
     @Get(':schoolBankAccountId')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getById(@Res() res: Response, @Param('schoolBankAccountId') schoolBankAccountId: number) {
+    async getById(
+        @Res() res: Response,
+        @Param('schoolBankAccountId') schoolBankAccountId: number
+    ) {
         try {
-            const schoolBankAccount = await this.schoolBankAccountService.getById(schoolBankAccountId);
+            const schoolBankAccount = await this.schoolBankAccountService.getById(
+                schoolBankAccountId
+            );
 
             res.status(HttpStatus.OK).send({
                 schoolBankAccount

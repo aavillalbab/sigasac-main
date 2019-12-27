@@ -15,7 +15,7 @@ export class SchoolBankAccountDto {
 
     @ApiProperty()
     accountTypeId: number;
-    
+
     @ApiProperty()
     singleAccountPlanId: number;
 

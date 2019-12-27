@@ -10,7 +10,9 @@ export class SchoolBankAccountsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const schoolBankAccount = await connection.getRepository(SchoolBankAccount).save(schoolBankAccountDto);
+            const schoolBankAccount = await connection
+                .getRepository(SchoolBankAccount)
+                .save(schoolBankAccountDto);
 
             return schoolBankAccount;
         } catch (error) {
@@ -22,7 +24,9 @@ export class SchoolBankAccountsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const schoolBankAccounts = await connection.getRepository(SchoolBankAccount).find();
+            const schoolBankAccounts = await connection
+                .getRepository(SchoolBankAccount)
+                .find();
 
             return schoolBankAccounts;
         } catch (error) {
@@ -34,7 +38,9 @@ export class SchoolBankAccountsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const schoolBankAccount = await connection.getRepository(SchoolBankAccount).findOne(id);
+            const schoolBankAccount = await connection
+                .getRepository(SchoolBankAccount)
+                .findOne(id);
 
             return schoolBankAccount;
         } catch (error) {
