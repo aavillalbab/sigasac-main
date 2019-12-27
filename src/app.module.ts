@@ -9,6 +9,8 @@ import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { NatureDocumentsModule } from './nature-documents/nature-documents.module';
 import { SchoolModule } from './school/school.module';
+import { SchoolBankAccountsModule } from './school-bank-accounts/school-bank-accounts.module';
+import { SingleAccountPlanModule } from './single-account-plan/single-account-plan.module';
 import { PeopleTypeModule } from './people-type/people-type.module';
 import { ProjectsModule } from './projects/projects.module';
 import { RegimeModule } from './regime/regime.module';
@@ -18,7 +20,6 @@ import { ThirdPartyTypesModule } from './third-party-types/third-party-types.mod
 import { ThirdPartyModule } from './third-party/third-party.module';
 import { VoucherModule } from './voucher/voucher.module';
 import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-accounts.module';
-import { SingleAccountPlanModule } from './single-account-plan/single-account-plan.module';
 
 @Module({
     imports: [
@@ -35,11 +36,12 @@ import { SingleAccountPlanModule } from './single-account-plan/single-account-pl
         RevenueTypeModule,
         RevenueModule,
         SchoolModule,
+        SchoolBankAccountsModule,
+        SingleAccountPlanModule,
         ThirdPartyModule,
         ThirdPartyTypesModule,
         VoucherModule,
-        ThirdPartyAccountsModule,
-        SingleAccountPlanModule
+        ThirdPartyAccountsModule
     ]
 })
 export class AppModule {}
