@@ -20,13 +20,13 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { LoginService } from './login.service';
 import { LoginDTO } from './dto/login.dto';
 
-@ApiTags('login')
-@Controller('sigasac/v1')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.login}`)
+@ApiTags(`${MAIN.subRoutes.login}`)
 export class LoginController {
     constructor(private readonly loginService: LoginService) {}
 

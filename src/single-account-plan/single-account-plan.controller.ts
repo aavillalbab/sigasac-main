@@ -20,15 +20,15 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { SingleAccountPlanService } from './single-account-plan.service';
 import { SingleAccountPlanDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/single-account-plan')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.singleAccountPlan}`)
+@ApiTags(`${MAIN.subRoutes.singleAccountPlan}`)
 @ApiBearerAuth()
-@ApiTags('single-account-plan')
 export class SingleAccountPlanController {
     constructor(
         private readonly singleAccountPlanService: SingleAccountPlanService

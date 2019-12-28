@@ -20,14 +20,14 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { TypesAdministratorDocumentsService } from './types-administrator-documents.service';
 import { TypeAdministratorDocumentDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/types-administrator-documents')
-@ApiTags('types-administrator-documents')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.typesAdministratorDocuments}`)
+@ApiTags(`${MAIN.subRoutes.typesAdministratorDocuments}`)
 @ApiBearerAuth()
 export class TypesAdministratorDocumentsController {
     constructor(

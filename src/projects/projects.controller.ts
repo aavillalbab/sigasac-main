@@ -21,13 +21,13 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/projects')
-@ApiTags('projects')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.projects}`)
+@ApiTags(`${MAIN.subRoutes.projects}`)
 @ApiBearerAuth()
 export class ProjectsController {
     constructor(private readonly projectService: ProjectsService) {}

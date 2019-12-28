@@ -21,11 +21,11 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 import { PeopleTypeService } from './people-type.service';
 
-@Controller('sigasac/v1/type-persons')
-@ApiTags('type-persons')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.typesPeople}`)
+@ApiTags(`${MAIN.subRoutes.typesPeople}`)
 @ApiBearerAuth()
 export class PeopleTypeController {
     constructor(private readonly typePersonService: PeopleTypeService) {}

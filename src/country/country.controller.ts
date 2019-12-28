@@ -16,14 +16,14 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, RolesGuard, User, Roles } from 'sigasac-utils';
+import { AuthGuard, RolesGuard, User, Roles, MAIN } from 'sigasac-utils';
 
 import { CountriesService } from './country.service';
 import { Country, Department, Town } from 'sigasac-db';
 
-@ApiTags('country')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.countries}`)
+@ApiTags(`${MAIN.subRoutes.countries}`)
 @ApiBearerAuth()
-@Controller('sigasac/v1/countries')
 export class CountryController {
     constructor(private readonly CountriesService: CountriesService) {}
 

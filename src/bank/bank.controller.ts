@@ -21,13 +21,13 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { BankService } from './bank.service';
 import { BankDto, ChangeStateDto } from './dto';
 
-@Controller('sigasac/v1/banks')
-@ApiTags('banks')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.banks}`)
+@ApiTags(`${MAIN.subRoutes.banks}`)
 @ApiBearerAuth()
 export class BankController {
     constructor(private readonly bankService: BankService) {}

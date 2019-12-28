@@ -20,15 +20,15 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { BudgetAccountsService } from './budget-accounts.service';
 import { BudgetAccountDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/budget-accounts')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.budgetAccounts}`)
+@ApiTags(`${MAIN.subRoutes.budgetAccounts}`)
 @ApiBearerAuth()
-@ApiTags('budget-accounts')
 export class BudgetAccountsController {
     constructor(
         private readonly budgetAccountsService: BudgetAccountsService

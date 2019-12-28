@@ -21,12 +21,12 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 import { ThirdPartyTypesService } from './third-party-types.service';
 import { ThirdPartyTypeDto } from './dto';
 
-@Controller('sigasac/v1/third-party-types')
-@ApiTags('third-party-types')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.thirdPartyTypes}`)
+@ApiTags(`${MAIN.subRoutes.thirdPartyTypes}`)
 @ApiBearerAuth()
 export class ThirdPartyTypesController {
     constructor(

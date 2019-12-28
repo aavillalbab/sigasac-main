@@ -21,13 +21,13 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { RegimeService } from './regime.service';
 
-@Controller('sigasac/v1/regimes')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.regimes}`)
+@ApiTags(`${MAIN.subRoutes.regimes}`)
 @ApiBearerAuth()
-@ApiTags('regimes')
 export class RegimeController {
     constructor(private readonly regimeService: RegimeService) {}
 

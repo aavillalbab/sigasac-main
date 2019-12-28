@@ -21,11 +21,11 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 import { RevenueTypeService } from './revenue-type.service';
 
-@Controller('sigasac/v1/revenues-types')
-@ApiTags('revenues-types')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.revenuesTypes}`)
+@ApiTags(`${MAIN.subRoutes.revenuesTypes}`)
 @ApiBearerAuth()
 export class RevenueTypeController {
     constructor(private readonly revenueTypeService: RevenueTypeService) {}

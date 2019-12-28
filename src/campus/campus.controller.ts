@@ -21,13 +21,13 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 import { CampusService } from './campus.service';
 import { CampusDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/campus')
-@ApiTags('campus')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.campus}`)
+@ApiTags(`${MAIN.subRoutes.campus}`)
 @ApiBearerAuth()
 export class CampusController {
     constructor(private readonly campusService: CampusService) {}

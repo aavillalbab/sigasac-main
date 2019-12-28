@@ -4,12 +4,12 @@ import { Response } from 'express';
 
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 import { NatureDocumentsService } from './nature-documents.service';
 
-@Controller('sigasac/v1/nature-documents')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.natureDocuments}`)
+@ApiTags(`${MAIN.subRoutes.natureDocuments}`)
 @ApiBearerAuth()
-@ApiTags('nature-documents')
 export class NatureDocumentsController {
     constructor(
         private readonly natureDocumentsService: NatureDocumentsService

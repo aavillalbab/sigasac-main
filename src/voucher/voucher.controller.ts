@@ -21,14 +21,14 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { VoucherService } from './voucher.service';
 import { VoucherDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/vouchers')
-@ApiTags('vouchers')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.vouchers}`)
+@ApiTags(`${MAIN.subRoutes.vouchers}`)
 @ApiBearerAuth()
 export class VoucherController {
     constructor(private readonly voucherService: VoucherService) {}

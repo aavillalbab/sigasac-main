@@ -4,12 +4,12 @@ import { Response } from 'express';
 
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { AccountsTypesService } from './accounts-types.service';
 
-@Controller('sigasac/v1/accounts-types')
-@ApiTags('accounts-types')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.accountsTypes}`)
+@ApiTags(`${MAIN.subRoutes.accountsTypes}`)
 @ApiBearerAuth()
 export class AccountsTypesController {
     constructor(private readonly accountsTypesService: AccountsTypesService) {}

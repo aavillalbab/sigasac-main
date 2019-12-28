@@ -21,14 +21,14 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { ThirdPartyService } from './third-party.service';
 import { ThirdPartyDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/third-parties')
-@ApiTags('third-parties')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.thirdParties}`)
+@ApiTags(`${MAIN.subRoutes.thirdParties}`)
 @ApiBearerAuth()
 export class ThirdPartyController {
     constructor(private readonly thirdPartyService: ThirdPartyService) {}

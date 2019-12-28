@@ -21,14 +21,14 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, User } from 'sigasac-utils';
+import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { SchoolBankAccountsService } from './school-bank-accounts.service';
 import { SchoolBankAccountDto } from './dto';
 import { ChangeStateDto } from 'src/bank/dto';
 
-@Controller('sigasac/v1/school-bank-accounts')
-@ApiTags('school-bank-accounts')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.schoolBankAccounts}`)
+@ApiTags(`${MAIN.subRoutes.schoolBankAccounts}`)
 @ApiBearerAuth()
 export class SchoolBankAccountsController {
     constructor(

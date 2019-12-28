@@ -21,15 +21,15 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { SchoolService } from './school.service';
 
 import { SchoolDto, SchoolStateDto, UserEmailDto } from './dto';
 
-@ApiTags('school')
+@Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.schools}`)
+@ApiTags(`${MAIN.subRoutes.schools}`)
 @ApiBearerAuth()
-@Controller('sigasac/v1/schools')
 export class SchoolController {
     constructor(private readonly schoolService: SchoolService) {}
 
