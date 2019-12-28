@@ -22,7 +22,9 @@ export class CampusService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const campus = await connection.getRepository(Campus).find({ where: { schoolId } });
+            const campus = await connection
+                .getRepository(Campus)
+                .find({ where: { schoolId } });
 
             return campus;
         } catch (error) {

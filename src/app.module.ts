@@ -21,6 +21,7 @@ import { ThirdPartyModule } from './third-party/third-party.module';
 import { VoucherModule } from './voucher/voucher.module';
 import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-accounts.module';
 import { BudgetAccountsModule } from './budget-accounts/budget-accounts.module';
+import { TypesAdministratorDocumentsModule } from './types-administrator-documents/types-administrator-documents.module';
 
 @Module({
     imports: [
@@ -43,7 +44,8 @@ import { BudgetAccountsModule } from './budget-accounts/budget-accounts.module';
         ThirdPartyTypesModule,
         VoucherModule,
         ThirdPartyAccountsModule,
-        BudgetAccountsModule
+        BudgetAccountsModule,
+        TypesAdministratorDocumentsModule
     ]
 })
 export class AppModule {}

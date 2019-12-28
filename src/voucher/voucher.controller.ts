@@ -37,7 +37,11 @@ export class VoucherController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @User('schoolId') schoolId: number, @Body() voucherDto: VoucherDto) {
+    async create(
+        @Res() res: Response,
+        @User('schoolId') schoolId: number,
+        @Body() voucherDto: VoucherDto
+    ) {
         try {
             voucherDto.schoolId = schoolId;
 

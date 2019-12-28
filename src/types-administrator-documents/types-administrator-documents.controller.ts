@@ -94,11 +94,15 @@ export class TypesAdministratorDocumentsController {
     @UseGuards(AuthGuard('jwt'))
     async update(
         @Res() res: Response,
-        @Param('typeAdministratorDocumentId') typeAdministratorDocumentId: number,
+        @Param('typeAdministratorDocumentId')
+        typeAdministratorDocumentId: number,
         @Body() typeAdministratorDocumentDto: TypeAdministratorDocumentDto
     ) {
         try {
-            await this.typesAdministratorDocumentsService.update(typeAdministratorDocumentId, typeAdministratorDocumentDto);
+            await this.typesAdministratorDocumentsService.update(
+                typeAdministratorDocumentId,
+                typeAdministratorDocumentDto
+            );
 
             res.status(HttpStatus.NO_CONTENT).send({
                 response: 'Actualización exitosa!'
@@ -123,7 +127,8 @@ export class TypesAdministratorDocumentsController {
     @UseGuards(AuthGuard('jwt'))
     async changeState(
         @Res() res: Response,
-        @Param('typeAdministratorDocumentId') typeAdministratorDocumentId: number,
+        @Param('typeAdministratorDocumentId')
+        typeAdministratorDocumentId: number,
         @Body() changeStateDto: ChangeStateDto
     ) {
         try {

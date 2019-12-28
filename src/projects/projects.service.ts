@@ -23,7 +23,9 @@ export class ProjectsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const projects = await connection.getRepository(Project).find({ where: { schoolId }});
+            const projects = await connection
+                .getRepository(Project)
+                .find({ where: { schoolId } });
 
             return projects;
         } catch (error) {
