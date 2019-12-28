@@ -18,11 +18,11 @@ export class CampusService {
         }
     }
 
-    async getAll() {
+    async getAll(schoolId: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const campus = await connection.getRepository(Campus).find();
+            const campus = await connection.getRepository(Campus).find({ where: { schoolId } });
 
             return campus;
         } catch (error) {
