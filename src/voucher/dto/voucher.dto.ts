@@ -9,4 +9,6 @@ export class VoucherDto {
 
     @ApiProperty({ required: false })
     code: string;
+
+    schoolId: number;
 }

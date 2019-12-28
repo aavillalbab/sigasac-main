@@ -19,13 +19,14 @@ export class VoucherService {
         }
     }
 
-    async getAll() {
+    async getAll(schoolId: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
             const vouchers = await connection
                 .getRepository(Voucher)
-                .createQueryBuilder()
+                .createQueryBuilder('voucher')
+                .where('voucher.schoolId = :schoolId', { schoolId })
                 .getMany();
 
             return vouchers;

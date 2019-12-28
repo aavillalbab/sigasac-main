@@ -21,7 +21,7 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard } from 'sigasac-utils';
+import { AuthGuard, User } from 'sigasac-utils';
 
 import { VoucherService } from './voucher.service';
 import { VoucherDto } from './dto';
@@ -37,8 +37,10 @@ export class VoucherController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @Body() voucherDto: VoucherDto) {
+    async create(@Res() res: Response, @User('schoolId') schoolId: number, @Body() voucherDto: VoucherDto) {
         try {
+            voucherDto.schoolId = schoolId;
+
             const voucher = await this.voucherService.create(voucherDto);
 
             res.status(HttpStatus.CREATED).send({
@@ -61,9 +63,9 @@ export class VoucherController {
     @Get()
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getAll(@Res() res: Response) {
+    async getAll(@Res() res: Response, @User('schoolId') schoolId: number) {
         try {
-            const vouchers = await this.voucherService.getAll();
+            const vouchers = await this.voucherService.getAll(schoolId);
 
             res.status(HttpStatus.OK).send({
                 vouchers
