@@ -19,11 +19,11 @@ export class ProjectsService {
         }
     }
 
-    async getAll() {
+    async getAll(schoolId: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const projects = await connection.getRepository(Project).find();
+            const projects = await connection.getRepository(Project).find({ where: { schoolId }});
 
             return projects;
         } catch (error) {

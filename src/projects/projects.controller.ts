@@ -66,9 +66,9 @@ export class ProjectsController {
     @Get()
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getAll(@Res() res: Response) {
+    async getAll(@Res() res: Response, @User('schoolId') schoolId: number,) {
         try {
-            const projects = await this.projectService.getAll();
+            const projects = await this.projectService.getAll(schoolId);
 
             res.status(HttpStatus.OK).send({
                 projects
