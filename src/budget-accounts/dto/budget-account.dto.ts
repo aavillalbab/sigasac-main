@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class BudgetAccountDto {
     @ApiProperty()
-    code: number;
+    code: string;
 
     @ApiProperty()
     description: string;

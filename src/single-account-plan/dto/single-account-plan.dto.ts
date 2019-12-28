@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class SingleAccountPlanDto {
     @ApiProperty()
-    code: number;
+    code: string;
 
     @ApiProperty()
     description: string;
