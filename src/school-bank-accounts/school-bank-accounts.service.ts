@@ -20,13 +20,13 @@ export class SchoolBankAccountsService {
         }
     }
 
-    async getAll() {
+    async getAll(schoolId: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
             const schoolBankAccounts = await connection
                 .getRepository(SchoolBankAccount)
-                .find();
+                .find({ where: { schoolId } });
 
             return schoolBankAccounts;
         } catch (error) {

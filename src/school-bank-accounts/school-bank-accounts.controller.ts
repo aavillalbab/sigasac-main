@@ -71,9 +71,11 @@ export class SchoolBankAccountsController {
     @Get()
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getAll(@Res() res: Response) {
+    async getAll(@Res() res: Response, @User('schoolId') schoolId: number) {
         try {
-            const schoolBankAccounts = await this.schoolBankAccountService.getAll();
+            const schoolBankAccounts = await this.schoolBankAccountService.getAll(
+                schoolId
+            );
 
             res.status(HttpStatus.OK).send({
                 schoolBankAccounts
