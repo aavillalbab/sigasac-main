@@ -18,13 +18,14 @@ export class ThirdPartyService {
         }
     }
 
-    async getAll() {
+    async getAll(schoolId: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
             const thirds = await connection
                 .getRepository(ThirdParty)
-                .createQueryBuilder()
+                .createQueryBuilder('tp')
+                .where('tp.schoolId = : schoolId', { schoolId })
                 .getMany();
 
             return thirds;

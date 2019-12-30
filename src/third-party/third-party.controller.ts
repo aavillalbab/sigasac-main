@@ -67,9 +67,9 @@ export class ThirdPartyController {
     @Get()
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getAll(@Res() res: Response) {
+    async getAll(@Res() res: Response, @User('schoolId') schoolId: number) {
         try {
-            const thirdParties = await this.thirdPartyService.getAll();
+            const thirdParties = await this.thirdPartyService.getAll(schoolId);
 
             res.status(HttpStatus.OK).send({
                 thirdParties
