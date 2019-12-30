@@ -34,23 +34,36 @@ export function userPayload(user: User): Payload {
             return {
                 id: m.id,
                 name: m.name,
-                permissions: m.permissions.map(p => {
-                    return {
-                        id: p.id,
-                        name: p.name
-                    };
-                }).filter(p => !m.menuPermissionProfile.some(mpp => p.id === mpp.permissionId)),
-                submenus: m.submenus
-                .map(sm => {
+                permissions: m.permissions
+                    .map(p => {
+                        return {
+                            id: p.id,
+                            name: p.name
+                        };
+                    })
+                    .filter(
+                        p =>
+                            !m.menuPermissionProfile.some(
+                                mpp => p.id === mpp.permissionId
+                            )
+                    ),
+                submenus: m.submenus.map(sm => {
                     return {
                         id: sm.id,
                         name: sm.name,
-                        permissions: sm.permissions.map(p => {
-                            return {
-                                id: p.id,
-                                name: p.name
-                            };
-                        }).filter(p => !sm.menuPermissionProfile.some(mpp => p.id === mpp.permissionId))
+                        permissions: sm.permissions
+                            .map(p => {
+                                return {
+                                    id: p.id,
+                                    name: p.name
+                                };
+                            })
+                            .filter(
+                                p =>
+                                    !sm.menuPermissionProfile.some(
+                                        mpp => p.id === mpp.permissionId
+                                    )
+                            )
                     };
                 })
             };

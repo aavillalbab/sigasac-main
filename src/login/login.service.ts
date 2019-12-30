@@ -66,9 +66,19 @@ export class LoginService {
                 .addSelect('user.password')
                 .leftJoinAndSelect('user.profiles', 'profiles')
                 .leftJoinAndSelect('profiles.menus', 'menus')
-                .leftJoinAndSelect('menus.menuPermissionProfile', 'mpp', 'mpp.state = :state', { state: 1 })
+                .leftJoinAndSelect(
+                    'menus.menuPermissionProfile',
+                    'mpp',
+                    'mpp.state = :state',
+                    { state: 1 }
+                )
                 .leftJoinAndSelect('menus.submenus', 'submenus')
-                .leftJoinAndSelect('submenus.menuPermissionProfile', 'smpp', 'smpp.state = :state', { state: 1 })
+                .leftJoinAndSelect(
+                    'submenus.menuPermissionProfile',
+                    'smpp',
+                    'smpp.state = :state',
+                    { state: 1 }
+                )
                 .innerJoinAndSelect('submenus.permissions', '_permissions')
                 .innerJoinAndSelect('menus.permissions', 'permissions')
                 .leftJoinAndSelect('user.schools', 'schools')
