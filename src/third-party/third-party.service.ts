@@ -25,7 +25,7 @@ export class ThirdPartyService {
             const thirds = await connection
                 .getRepository(ThirdParty)
                 .createQueryBuilder('tp')
-                .where('tp.schoolId = : schoolId', { schoolId })
+                .where('tp.schoolId = :schoolId', { schoolId })
                 .getMany();
 
             return thirds;
