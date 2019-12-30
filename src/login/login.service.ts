@@ -66,14 +66,18 @@ export class LoginService {
                 .addSelect('user.password')
                 .leftJoinAndSelect('user.profiles', 'profiles')
                 .leftJoinAndSelect('profiles.menus', 'menus')
+                .leftJoinAndSelect('menus.menuPermissionProfile', 'mpp', 'mpp.state = :state', { state: 1 })
                 .leftJoinAndSelect('menus.submenus', 'submenus')
-                .leftJoinAndSelect('submenus.permissions', '_permissions')
-                .leftJoinAndSelect('menus.permissions', 'permissions')
+                .leftJoinAndSelect('submenus.menuPermissionProfile', 'smpp', 'smpp.state = :state', { state: 1 })
+                .innerJoinAndSelect('submenus.permissions', '_permissions')
+                .innerJoinAndSelect('menus.permissions', 'permissions')
                 .leftJoinAndSelect('user.schools', 'schools')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)
                 .andWhere('menus.father IS NULL')
+                .andWhere('mpp.profile_id = profiles.id')
+                .andWhere('smpp.profile_id = profiles.id')
                 .getOne();
 
             if (user) {

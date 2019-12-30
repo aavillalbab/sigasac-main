@@ -39,8 +39,9 @@ export function userPayload(user: User): Payload {
                         id: p.id,
                         name: p.name
                     };
-                }),
-                submenus: m.submenus.map(sm => {
+                }).filter(p => !m.menuPermissionProfile.some(mpp => p.id === mpp.permissionId)),
+                submenus: m.submenus
+                .map(sm => {
                     return {
                         id: sm.id,
                         name: sm.name,
@@ -49,7 +50,7 @@ export function userPayload(user: User): Payload {
                                 id: p.id,
                                 name: p.name
                             };
-                        })
+                        }).filter(p => !sm.menuPermissionProfile.some(mpp => p.id === mpp.permissionId))
                     };
                 })
             };
