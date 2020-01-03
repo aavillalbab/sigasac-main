@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import { DatabaseProvider, ThirdPartyAccounts } from 'sigasac-db';
 import { ThirdPartyAccountDto } from './dto';
@@ -9,25 +9,34 @@ export class ThirdPartyAccountsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const project = await connection
+            const thirdPartyAccounts = await connection
                 .getRepository(ThirdPartyAccounts)
                 .save(thirdPartyAccountDto);
 
-            return project;
+            return thirdPartyAccounts;
         } catch (error) {
             throw error;
         }
     }
 
-    async getAll() {
+    async getAll(schoolId?: number, thirdPartyId?: number) {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const projects = await connection
+            let thirdPartyAccounts: Array<ThirdPartyAccounts>;
+
+            if (schoolId && thirdPartyId) {
+                thirdPartyAccounts = await this.getByThirdPartyId(
+                    schoolId,
+                    thirdPartyId
+                );
+            } else {
+                thirdPartyAccounts = await connection
                 .getRepository(ThirdPartyAccounts)
                 .find();
+            }
 
-            return projects;
+            return thirdPartyAccounts;
         } catch (error) {
             throw error;
         }
@@ -37,11 +46,31 @@ export class ThirdPartyAccountsService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const project = await connection
+            const thirdPartyAccount = await connection
                 .getRepository(ThirdPartyAccounts)
                 .findOne(id);
 
-            return project;
+            return thirdPartyAccount;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    private async getByThirdPartyId(schoolId: number, thirdPartyId: number) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const thirdPartyAccounts = await connection
+                .getRepository(ThirdPartyAccounts)
+                .createQueryBuilder('tpa')
+                .innerJoinAndSelect('tpa.thirdParty', 'tp')
+                .innerJoinAndSelect('tpa.bank', 'bank')
+                .innerJoinAndSelect('tpa.accountType', 'accountType')
+                .where('tp.schoolId = :schoolId', { schoolId })
+                .andWhere('tp.id = :thirdPartyId', { thirdPartyId })
+                .getMany();
+
+            return thirdPartyAccounts;
         } catch (error) {
             throw error;
         }

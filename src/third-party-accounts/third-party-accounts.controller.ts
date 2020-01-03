@@ -8,7 +8,8 @@ import {
     Put,
     Get,
     UseGuards,
-    Patch
+    Patch,
+    Query
 } from '@nestjs/common';
 
 import { Response } from 'express';
@@ -23,7 +24,8 @@ import {
 import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { ThirdPartyAccountsService } from './third-party-accounts.service';
-import { ThirdPartyAccountDto, ChangeStateDto } from './dto';
+import { ThirdPartyAccountDto, ChangeStateDto, ThirdPartyParamIdDto } from './dto';
+import { userPayload } from 'src/login/functions';
 
 @Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.thirdPartyAccounts}`)
 @ApiTags(`${MAIN.subRoutes.thirdPartyAccounts}`)
@@ -66,9 +68,13 @@ export class ThirdPartyAccountsController {
     @Get()
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getAll(@Res() res: Response) {
+    async getAll(
+        @Res() res: Response, 
+        @User('schoolId') schoolId: number,
+        @Query() thirdPartyParamIdDto: ThirdPartyParamIdDto
+    ) {
         try {
-            const thirdPartyAccounts = await this.thirdPartyAccountsService.getAll();
+            const thirdPartyAccounts = await this.thirdPartyAccountsService.getAll(schoolId, thirdPartyParamIdDto.thirdPartyId);
 
             res.status(HttpStatus.OK).send({
                 thirdPartyAccounts
