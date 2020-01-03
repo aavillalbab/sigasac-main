@@ -24,7 +24,11 @@ import {
 import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { ThirdPartyAccountsService } from './third-party-accounts.service';
-import { ThirdPartyAccountDto, ChangeStateDto, ThirdPartyParamIdDto } from './dto';
+import {
+    ThirdPartyAccountDto,
+    ChangeStateDto,
+    ThirdPartyParamIdDto
+} from './dto';
 import { userPayload } from 'src/login/functions';
 
 @Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.thirdPartyAccounts}`)
@@ -69,12 +73,15 @@ export class ThirdPartyAccountsController {
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
     async getAll(
-        @Res() res: Response, 
+        @Res() res: Response,
         @User('schoolId') schoolId: number,
         @Query() thirdPartyParamIdDto: ThirdPartyParamIdDto
     ) {
         try {
-            const thirdPartyAccounts = await this.thirdPartyAccountsService.getAll(schoolId, thirdPartyParamIdDto.thirdPartyId);
+            const thirdPartyAccounts = await this.thirdPartyAccountsService.getAll(
+                schoolId,
+                thirdPartyParamIdDto.thirdPartyId
+            );
 
             res.status(HttpStatus.OK).send({
                 thirdPartyAccounts

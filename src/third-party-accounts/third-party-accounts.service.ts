@@ -32,8 +32,8 @@ export class ThirdPartyAccountsService {
                 );
             } else {
                 thirdPartyAccounts = await connection
-                .getRepository(ThirdPartyAccounts)
-                .find();
+                    .getRepository(ThirdPartyAccounts)
+                    .find();
             }
 
             return thirdPartyAccounts;
