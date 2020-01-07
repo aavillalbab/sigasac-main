@@ -66,30 +66,34 @@ export class LoginService {
                 .addSelect('user.password')
                 .leftJoinAndSelect('user.profiles', 'profiles')
                 .leftJoinAndSelect('profiles.menus', 'menus')
+                .leftJoinAndSelect('menus.permissions', 'permissions')
                 .leftJoinAndSelect(
                     'menus.menuPermissionProfile',
                     'mpp',
-                    'mpp.state = :state',
+                    'mpp.profileId = profiles.id AND mpp.state = :state',
                     { state: 1 }
                 )
                 .leftJoinAndSelect('menus.submenus', 'submenus')
+                .leftJoinAndSelect('submenus.permissions', '_permissions')
                 .leftJoinAndSelect(
                     'submenus.menuPermissionProfile',
                     'smpp',
-                    'smpp.state = :state',
+                    'smpp.profileId = profiles.id AND smpp.state = :state',
                     { state: 1 }
                 )
-                .innerJoinAndSelect('submenus.permissions', '_permissions')
-                .innerJoinAndSelect('menus.permissions', 'permissions')
+                .leftJoinAndSelect(
+                    'submenus.profiles',
+                    '_profiles',
+                    '_profiles.id = profiles.id'
+                )
                 .leftJoinAndSelect('user.schools', 'schools')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)
                 .andWhere('menus.father IS NULL')
-                .andWhere('mpp.profile_id = profiles.id')
-                .andWhere('smpp.profile_id = profiles.id')
+                .orderBy('menus.id', 'ASC')
                 .getOne();
-
+            // Logger.log(user.profiles[0].menus[0])
             if (user) {
                 if (User.isPassword(user.password, password)) {
                     return user;

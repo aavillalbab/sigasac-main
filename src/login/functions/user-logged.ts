@@ -23,7 +23,7 @@ export function userLogged(user: User): UserPayload {
  * @param user
  */
 export function userPayload(user: User): Payload {
-    return {
+    const userPayload = {
         sub: user.id,
         name: user.name,
         email: user.email,
@@ -36,37 +36,33 @@ export function userPayload(user: User): Payload {
                 name: m.name,
                 permissions: m.permissions
                     .map(p => {
-                        return {
-                            id: p.id,
-                            name: p.name
-                        };
+                        return { id: p.id, name: p.name };
                     })
-                    .filter(
-                        p =>
-                            !m.menuPermissionProfile.some(
-                                mpp => p.id === mpp.permissionId
-                            )
+                    .filter(p =>
+                        m.menuPermissionProfile.some(
+                            mpp => p.id === mpp.permissionId
+                        )
                     ),
-                submenus: m.submenus.map(sm => {
-                    return {
-                        id: sm.id,
-                        name: sm.name,
-                        permissions: sm.permissions
-                            .map(p => {
-                                return {
-                                    id: p.id,
-                                    name: p.name
-                                };
-                            })
-                            .filter(
-                                p =>
-                                    !sm.menuPermissionProfile.some(
+                submenus: m.submenus
+                    .filter(sm => sm.profiles.length)
+                    .map(sm => {
+                        return {
+                            id: sm.id,
+                            name: sm.name,
+                            permissions: sm.permissions
+                                .map(p => {
+                                    return { id: p.id, name: p.name };
+                                })
+                                .filter(p =>
+                                    sm.menuPermissionProfile.some(
                                         mpp => p.id === mpp.permissionId
                                     )
-                            )
-                    };
-                })
+                                )
+                        };
+                    })
             };
         })
     };
+    // Logger.log(userPayload)
+    return userPayload;
 }
