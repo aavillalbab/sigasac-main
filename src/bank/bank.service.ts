@@ -23,7 +23,8 @@ export class BankService {
 
             const banks = await connection
                 .getRepository(Bank)
-                .createQueryBuilder()
+                .createQueryBuilder('b')
+                .orderBy('b.id', 'ASC')
                 .getMany();
 
             return banks;
