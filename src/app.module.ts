@@ -23,6 +23,7 @@ import { ThirdPartyAccountsModule } from './third-party-accounts/third-party-acc
 import { BudgetAccountsModule } from './budget-accounts/budget-accounts.module';
 import { TypesAdministratorDocumentsModule } from './types-administrator-documents/types-administrator-documents.module';
 import { TypesSchoolDocumentsModule } from './types-school-documents/types-school-documents.module';
+import { BudgetsModule } from './budgets/budgets.module';
 
 @Module({
     imports: [
@@ -47,7 +48,8 @@ import { TypesSchoolDocumentsModule } from './types-school-documents/types-schoo
         ThirdPartyAccountsModule,
         BudgetAccountsModule,
         TypesAdministratorDocumentsModule,
-        TypesSchoolDocumentsModule
+        TypesSchoolDocumentsModule,
+        BudgetsModule
     ]
 })
 export class AppModule {}
