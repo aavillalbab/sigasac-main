@@ -1,4 +1,11 @@
-import { Controller, Get, UseGuards, Res, HttpStatus, Param } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    UseGuards,
+    Res,
+    HttpStatus,
+    Param
+} from '@nestjs/common';
 
 import { Response } from 'express';
 
@@ -45,9 +52,14 @@ export class BudgetsController {
     @Get(':budgetId/concepts')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getConcepts(@Res() res: Response, @Param('budgetId') budgetId: number) {
+    async getConcepts(
+        @Res() res: Response,
+        @Param('budgetId') budgetId: number
+    ) {
         try {
-            const concepts = await this.budgetServices.getConceptsByBudgetId(budgetId);
+            const concepts = await this.budgetServices.getConceptsByBudgetId(
+                budgetId
+            );
 
             res.status(HttpStatus.OK).send({
                 concepts
@@ -69,9 +81,14 @@ export class BudgetsController {
     @Get('/concepts/:conceptId/subconcepts')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async getSubconcepts(@Res() res: Response, @Param('conceptId') conceptId: number) {
+    async getSubconcepts(
+        @Res() res: Response,
+        @Param('conceptId') conceptId: number
+    ) {
         try {
-            const subconcepts = await this.budgetServices.getSubconceptsByConceptId(conceptId);
+            const subconcepts = await this.budgetServices.getSubconceptsByConceptId(
+                conceptId
+            );
 
             res.status(HttpStatus.OK).send({
                 subconcepts
