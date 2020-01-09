@@ -6,6 +6,7 @@ import { AccountsTypesModule } from './accounts-types/accounts-types.module';
 import { BankModule } from './bank/bank.module';
 import { CampusModule } from './campus/campus.module';
 import { BudgetAccountsModule } from './budget-accounts/budget-accounts.module';
+import { BudgetNotesModule } from './budget-notes/budget-notes.module';
 import { BudgetsModule } from './budgets/budgets.module';
 import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
@@ -31,6 +32,7 @@ import { VoucherModule } from './voucher/voucher.module';
         AccountsTypesModule,
         BankModule,
         BudgetAccountsModule,
+        BudgetNotesModule,
         BudgetsModule,
         CampusModule,
         CountryModule,
