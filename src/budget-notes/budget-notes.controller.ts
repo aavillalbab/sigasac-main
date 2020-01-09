@@ -23,7 +23,7 @@ import {
 import { AuthGuard, User, MAIN } from 'sigasac-utils';
 
 import { BudgetNotesService } from './budget-notes.service';
-import { BudgetNoteDto, BudgetNoteDetailDto } from './dto/indext';
+import { BudgetNoteDto, BudgetNoteDetailDto } from './dto';
 
 @Controller(`${MAIN.apiBasePath}/${MAIN.subRoutes.budgetNotes}`)
 @ApiTags(`${MAIN.subRoutes.budgetNotes}`)

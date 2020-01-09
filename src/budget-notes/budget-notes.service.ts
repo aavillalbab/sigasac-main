@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { DatabaseProvider, BudgetNote, BudgetNotesDetail } from 'sigasac-db';
 
-import { BudgetNoteDto, BudgetNoteDetailDto } from './dto/indext';
+import { BudgetNoteDto, BudgetNoteDetailDto } from './dto';
 
 @Injectable()
 export class BudgetNotesService {
