@@ -17,7 +17,8 @@ import {
     ApiTags,
     ApiConsumes,
     ApiOperation,
-    ApiBearerAuth
+    ApiBearerAuth,
+    ApiBody
 } from '@nestjs/swagger';
 
 import { AuthGuard, User, MAIN } from 'sigasac-utils';
@@ -32,6 +33,7 @@ export class BudgetNotesController {
     constructor(private readonly budgetNotesService: BudgetNotesService) {}
 
     @Post()
+    @ApiBody({ type: BudgetNoteDto })
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))

@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BudgetNoteDetailDto {
-    @ApiProperty()
-    value: number;
-
-    @ApiProperty()
     budgetNoteId: number;
+
+    @ApiProperty({ required: false })
+    value: number;
 
     @ApiProperty({ required: false })
     budgetAccountId: number;

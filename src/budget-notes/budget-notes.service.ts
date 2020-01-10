@@ -10,12 +10,38 @@ export class BudgetNotesService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            return await connection
+            const budgetNote = await connection
                 .getRepository(BudgetNote)
                 .save(budgetNoteDto);
+
+            await connection
+                .getRepository(BudgetNotesDetail)
+                .save(
+                    this.addBudgetIdToBudgetNotesDetail(
+                        budgetNote.id,
+                        budgetNoteDto.budgetNotesDetail
+                    )
+                );
+
+            return budgetNote;
         } catch (error) {
             throw error;
         }
+    }
+
+    private addBudgetIdToBudgetNotesDetail(
+        budgetNoteId: number,
+        budgetNotesDetail: BudgetNoteDetailDto[]
+    ) {
+        const _budgetNotesDetail: BudgetNoteDetailDto[] = [];
+
+        for (let budgetNoteDetail of budgetNotesDetail) {
+            budgetNoteDetail.budgetNoteId = budgetNoteId;
+
+            _budgetNotesDetail.push(budgetNoteDetail);
+        }
+
+        return _budgetNotesDetail;
     }
 
     async createBudgetNoteDetail(budgetNoteDetailDto: BudgetNoteDetailDto) {
