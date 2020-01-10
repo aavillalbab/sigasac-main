@@ -62,7 +62,17 @@ export class BudgetNotesService {
 
             return await connection
                 .getRepository(BudgetNote)
-                .find({ where: { schoolId } });
+                .createQueryBuilder('bn')
+                .leftJoinAndSelect('bn.concept', 'concept')
+                .leftJoinAndSelect('bn.subconcept', 'subconcept')
+                .leftJoinAndSelect('bn.thirdParty', 'thirdParty')
+                .leftJoinAndSelect('bn.budgetNotesDetail', 'bnd')
+                .leftJoinAndSelect('bnd.budgetAccount', 'budgetAccount')
+                .leftJoinAndSelect('bnd.campus', 'campus')
+                .leftJoinAndSelect('bnd.revenue', 'revenue')
+                .leftJoinAndSelect('bnd.project', 'project')
+                .where('bn.schoolId = :schoolId', { schoolId })
+                .getMany();
         } catch (error) {
             throw error;
         }
@@ -75,7 +85,14 @@ export class BudgetNotesService {
             return await connection
                 .getRepository(BudgetNote)
                 .createQueryBuilder('bn')
+                .leftJoinAndSelect('bn.concept', 'concept')
+                .leftJoinAndSelect('bn.subconcept', 'subconcept')
+                .leftJoinAndSelect('bn.thirdParty', 'thirdParty')
                 .leftJoinAndSelect('bn.budgetNotesDetail', 'bnd')
+                .leftJoinAndSelect('bnd.budgetAccount', 'budgetAccount')
+                .leftJoinAndSelect('bnd.campus', 'campus')
+                .leftJoinAndSelect('bnd.revenue', 'revenue')
+                .leftJoinAndSelect('bnd.project', 'project')
                 .where('bn.id = :id', { id })
                 .andWhere('bn.schoolId = :schoolId', { schoolId })
                 .getOne();
