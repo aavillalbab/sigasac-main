@@ -34,6 +34,7 @@ export class LoginService {
             const token = await this.authService.signJwt(userPayload(user));
 
             return {
+                userId: user.id,
                 user: userLogged(user),
                 token
             };
@@ -86,13 +87,14 @@ export class LoginService {
                     '_profiles.id = profiles.id'
                 )
                 .leftJoinAndSelect('user.schools', 'schools')
+                .leftJoinAndSelect('user.userLog', 'ul')
                 .where('user.email = :email', { email })
                 .andWhere('user.state = :state', { state: 1 })
                 .andWhere(SchoolCondition)
                 .andWhere('menus.father IS NULL')
                 .orderBy('menus.id', 'ASC')
                 .getOne();
-            // Logger.log(user.profiles[0].menus[0])
+            Logger.log(user.userLog)
             if (user) {
                 if (User.isPassword(user.password, password)) {
                     return user;
@@ -119,7 +121,7 @@ export class LoginService {
         try {
             const connection = await DatabaseProvider.getConnection();
 
-            const lastLogin = new Date().toLocaleString();
+            const lastLogin = new Date();
 
             const userLog = await connection
                 .getRepository(UserLog)

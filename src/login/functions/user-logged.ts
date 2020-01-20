@@ -10,10 +10,11 @@ import { Logger } from '@nestjs/common';
  */
 export function userLogged(user: User): UserPayload {
     return {
-        sub: user.id,
         name: user.name,
         email: user.email,
-        phone: user.phone
+        phone: user.phone,
+        lastLogin: user.userLog.lastLogin,
+        from: user.userLog.from,
     };
 }
 
