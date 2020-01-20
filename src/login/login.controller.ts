@@ -33,9 +33,15 @@ export class LoginController {
     @Post('/login')
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
-    async login(@Res() res: Response, @Body() loginDTO: LoginDTO) {
+    async login(
+        @Res() res: Response,
+        @Req() req: Request,
+        @Body() loginDTO: LoginDTO
+    ) {
         try {
             const user = await this.loginService.getAuthenticatedUser(loginDTO);
+
+            await this.loginService.addLoggerUser(user.user.sub, req.hostname);
 
             res.status(HttpStatus.OK).send(user);
         } catch (error) {

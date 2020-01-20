@@ -10,7 +10,8 @@ import {
     School,
     User,
     SchoolProfileUser,
-    Profile
+    Profile,
+    UserLog
 } from 'sigasac-db';
 import { AuthService } from 'sigasac-utils';
 
@@ -108,6 +109,32 @@ export class LoginService {
                 throw new NotFoundException(
                     `El usuario con correo ${email} no está registrado en nuestro sistema.`
                 );
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async addLoggerUser(userId: number, from: string) {
+        try {
+            const connection = await DatabaseProvider.getConnection();
+
+            const lastLogin = new Date().toLocaleString();
+
+            const userLog = await connection
+                .getRepository(UserLog)
+                .findOne({ where: { userId } });
+
+            if (userLog) {
+                userLog.lastLogin = lastLogin;
+                userLog.from = from;
+                await connection.getRepository(UserLog).save(userLog);
+            }
+
+            if (!userLog) {
+                await connection
+                    .getRepository(UserLog)
+                    .save({ userId, lastLogin, from });
             }
         } catch (error) {
             throw error;
