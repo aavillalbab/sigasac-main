@@ -70,16 +70,14 @@ export class LoginService {
                 .leftJoinAndSelect(
                     'menus.menuPermissionProfile',
                     'mpp',
-                    'mpp.profileId = profiles.id AND mpp.state = :state',
-                    { state: 1 }
+                    'mpp.profileId = profiles.id'
                 )
                 .leftJoinAndSelect('menus.submenus', 'submenus')
                 .leftJoinAndSelect('submenus.permissions', '_permissions')
                 .leftJoinAndSelect(
                     'submenus.menuPermissionProfile',
                     'smpp',
-                    'smpp.profileId = profiles.id AND smpp.state = :state',
-                    { state: 1 }
+                    'smpp.profileId = profiles.id'
                 )
                 .leftJoinAndSelect(
                     'submenus.profiles',
