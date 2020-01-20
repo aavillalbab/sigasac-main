@@ -1,5 +1,6 @@
 import { UserPayload, Payload } from '../interfaces';
 import { User } from 'sigasac-db';
+import { DatesHelper } from "sigasac-utils";
 import { Logger } from '@nestjs/common';
 
 /**
@@ -13,7 +14,7 @@ export function userLogged(user: User): UserPayload {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        lastLogin: user.userLog.lastLogin,
+        lastLogin: DatesHelper.setLocalTime(user.userLog.lastLogin),
         from: user.userLog.from
     };
 }
