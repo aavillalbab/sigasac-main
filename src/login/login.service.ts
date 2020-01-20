@@ -94,7 +94,7 @@ export class LoginService {
                 .andWhere('menus.father IS NULL')
                 .orderBy('menus.id', 'ASC')
                 .getOne();
-            Logger.log(user.userLog)
+
             if (user) {
                 if (User.isPassword(user.password, password)) {
                     return user;

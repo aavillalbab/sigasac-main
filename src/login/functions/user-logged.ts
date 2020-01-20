@@ -13,8 +13,8 @@ export function userLogged(user: User): UserPayload {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        lastLogin: user.userLog.lastLogin,
-        from: user.userLog.from,
+        lastLogin: user.userLog.lastLogin.toLocaleString(),
+        from: user.userLog.from
     };
 }
 
