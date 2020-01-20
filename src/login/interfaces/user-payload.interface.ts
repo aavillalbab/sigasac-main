@@ -2,6 +2,6 @@ export interface UserPayload {
     name: string;
     email: string;
     phone: string;
-    lastLogin: string;
+    lastLogin: Date;
     from: string;
 }
