@@ -12,8 +12,10 @@ import { Logger } from '@nestjs/common';
 export function userLogged(user: User): UserPayload {
     return {
         name: user.name,
+        surname: user.surname,
         email: user.email,
         phone: user.phone,
+        cellphone: user.cellphone,
         lastLogin: user.userLog ? DatesHelper.setLocalTime(user.userLog.lastLogin) : null,
         from: user.userLog ? user.userLog.from : null
     };
@@ -25,11 +27,13 @@ export function userLogged(user: User): UserPayload {
  * @param user
  */
 export function userPayload(user: User): Payload {
-    const userPayload = {
+    return {
         sub: user.id,
         name: user.name,
+        surname: user.surname,
         email: user.email,
         phone: user.phone,
+        cellphone: user.cellphone,
         role: user.profiles[0].description,
         schoolId: user.schools.length ? user.schools[0].id : null,
         menus: user.profiles[0].menus.map(m => {
@@ -65,6 +69,4 @@ export function userPayload(user: User): Payload {
             };
         })
     };
-    // Logger.log(userPayload)
-    return userPayload;
 }

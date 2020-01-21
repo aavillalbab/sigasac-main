@@ -20,8 +20,10 @@ export interface Payload {
     /** Id en la tabla de usuarios (users) */
     sub: number;
     name: string;
+    surname: string;
     email: string;
     phone: string;
+    cellphone: string;
     role: string;
     schoolId: number;
     menus: Menu[];
