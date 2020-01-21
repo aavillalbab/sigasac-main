@@ -14,8 +14,8 @@ export function userLogged(user: User): UserPayload {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        lastLogin: DatesHelper.setLocalTime(user.userLog.lastLogin),
-        from: user.userLog.from
+        lastLogin: user.userLog ? DatesHelper.setLocalTime(user.userLog.lastLogin) : null,
+        from: user.userLog ? user.userLog.from : null
     };
 }
 
