@@ -51,7 +51,7 @@ export class SchoolController {
             const token = req.headers['authorization'];
 
             // crear mes para el colegio creado
-            await SigasacRequest.post(host, 'data', 'v1', 'months', token, {
+            await SigasacRequest.post(`${host}:3003`, 'data', 'v1', 'months', token, {
                 startDate: new Date(),
                 schoolId: s.id
             });
