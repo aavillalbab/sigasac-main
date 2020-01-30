@@ -53,7 +53,7 @@ export class SchoolController {
             // crear mes para el colegio creado
             await SigasacRequest.post(host, 'data', 'v1', 'months', token, {
                 startDate: new Date(),
-                schoolId: 4
+                schoolId: s.id
             });
 
             res.status(HttpStatus.CREATED).send({
