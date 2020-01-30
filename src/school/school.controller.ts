@@ -9,10 +9,12 @@ import {
     Get,
     Query,
     Patch,
-    UseGuards
+    UseGuards,
+    Req,
+    Logger
 } from '@nestjs/common';
 
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 import {
     ApiTags,
@@ -21,7 +23,7 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
-import { AuthGuard, MAIN } from 'sigasac-utils';
+import { AuthGuard, MAIN, SigasacRequest } from 'sigasac-utils';
 
 import { SchoolService } from './school.service';
 
@@ -37,9 +39,22 @@ export class SchoolController {
     @ApiConsumes('application/x-www-form-urlencoded')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
-    async create(@Res() res: Response, @Body() school: SchoolDto) {
+    async create(
+        @Res() res: Response,
+        @Req() req: Request,
+        @Body() school: SchoolDto
+    ) {
         try {
             const s = await this.schoolService.create(school);
+
+            const host = req.headers['host'].split(':')[0];
+            const token = req.headers['authorization'];
+
+            // crear mes para el colegio creado
+            await SigasacRequest.post(host, 'data', 'v1', 'months', token, {
+                startDate: new Date(),
+                schoolId: 4
+            });
 
             res.status(HttpStatus.CREATED).send({
                 school: s
