@@ -20,6 +20,8 @@ import {
     ApiBearerAuth
 } from '@nestjs/swagger';
 
+import { v4, v6 } from "public-ip";
+
 import { AuthGuard, MAIN } from 'sigasac-utils';
 
 import { LoginService } from './login.service';
@@ -41,9 +43,11 @@ export class LoginController {
         try {
             const user = await this.loginService.getAuthenticatedUser(loginDTO);
 
+            const ip = await v4();
+
             await this.loginService.addLoggerUser(
                 user.userId,
-                req.headers['host']
+                ip
             );
 
             res.status(HttpStatus.OK).send({
