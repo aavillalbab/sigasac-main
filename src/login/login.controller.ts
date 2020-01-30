@@ -41,7 +41,10 @@ export class LoginController {
         try {
             const user = await this.loginService.getAuthenticatedUser(loginDTO);
 
-            await this.loginService.addLoggerUser(user.userId, req.headers['host']);
+            await this.loginService.addLoggerUser(
+                user.userId,
+                req.headers['host']
+            );
 
             res.status(HttpStatus.OK).send({
                 user: user.user,
