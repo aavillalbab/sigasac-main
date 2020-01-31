@@ -52,9 +52,7 @@ export class SchoolController {
 
             // crear usuario super admin colegio
             await SigasacRequest.post(`${host}:3001`, 'users', 'v1', 'main', token, {
-                name: '',
-                email: '',
-                password: '',
+                ...school.user,
                 profileId: 3,
                 schoolId: s.id
             });
