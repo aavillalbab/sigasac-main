@@ -1,6 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
+class UserDto {
+    @ApiProperty()
+    name: string;
+
+    @ApiProperty()
+    email: string;
+    
+    @ApiProperty()
+    password: string;
+}
 export class SchoolDto {
     @ApiProperty()
     nit: string;
@@ -45,4 +55,10 @@ export class SchoolDto {
         required: false
     })
     sectorId?: number;
+
+    @ApiProperty({
+        required: false,
+        type: UserDto
+    })
+    user?: UserDto
 }

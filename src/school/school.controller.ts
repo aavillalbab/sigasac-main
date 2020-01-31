@@ -36,7 +36,7 @@ export class SchoolController {
     constructor(private readonly schoolService: SchoolService) {}
 
     @Post()
-    @ApiConsumes('application/x-www-form-urlencoded')
+    @ApiConsumes('application/x-www-form-urlencoded', 'application/json')
     @ApiOperation({})
     @UseGuards(AuthGuard('jwt'))
     async create(
@@ -49,6 +49,15 @@ export class SchoolController {
 
             const host = req.headers['host'].split(':')[0];
             const token = req.headers['authorization'];
+
+            // crear usuario super admin colegio
+            await SigasacRequest.post(`${host}:3001`, 'users', 'v1', 'main', token, {
+                name: '',
+                email: '',
+                password: '',
+                profileId: 3,
+                schoolId: s.id
+            });
 
             // crear mes para el colegio creado
             await SigasacRequest.post(`${host}:3003`, 'data', 'v1', 'months', token, {
