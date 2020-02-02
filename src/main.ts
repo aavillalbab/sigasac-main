@@ -18,7 +18,7 @@ async function bootstrap() {
     app.enableCors();
 
     const options = new DocumentBuilder()
-        .setTitle('Siga SAC API, módulo principal')
+        .setTitle(`${MAIN.name}`.toUpperCase())
         .setDescription(`${MAIN.description}`)
         .setVersion('1.0')
         .addBearerAuth()
