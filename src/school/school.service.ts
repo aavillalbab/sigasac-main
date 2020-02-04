@@ -129,17 +129,21 @@ export class SchoolService {
                     .map(spu => spu.profileId)
                     .includes(1);
 
-                if (isSuperAdmin && !schools.length) {
+                const isSuperAdminMinEdu = user.schoolProfileUser
+                    .map(spu => spu.profileId)
+                    .includes(5);
+
+                if ((isSuperAdmin || isSuperAdminMinEdu) && !schools.length) {
                     schools = [];
                 }
 
-                if (!isSuperAdmin && !schools.length) {
+                if (!(isSuperAdmin || isSuperAdminMinEdu) && !schools.length) {
                     throw new ConflictException(
                         `El usuario con correo ${email} no es super administardor y no tiene colegios asignados.`
                     );
                 }
 
-                if (!isSuperAdmin && schools.length) {
+                if (!(isSuperAdmin || isSuperAdminMinEdu) && schools.length) {
                     schools = schools;
                 }
             }

@@ -7,7 +7,7 @@ class UserDto {
 
     @ApiProperty()
     email: string;
-    
+
     @ApiProperty()
     password: string;
 }
@@ -60,5 +60,5 @@ export class SchoolDto {
         required: false,
         type: UserDto
     })
-    user?: UserDto
+    user?: UserDto;
 }
