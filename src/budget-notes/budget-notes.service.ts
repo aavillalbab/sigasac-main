@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, ConflictException } from '@nestjs/common';
 
-import { DatabaseProvider, BudgetNote, BudgetNotesDetail } from 'sigasac-db';
+import {
+    DatabaseProvider,
+    BudgetNote,
+    BudgetNotesDetail,
+    School
+} from 'sigasac-db';
 
 import { BudgetNoteDto, BudgetNoteDetailDto } from './dto';
 
@@ -9,6 +14,28 @@ export class BudgetNotesService {
     async create(budgetNoteDto: BudgetNoteDto) {
         try {
             const connection = await DatabaseProvider.getConnection();
+
+            const months = (
+                await connection
+                    .getRepository(School)
+                    .createQueryBuilder('s')
+                    .leftJoinAndSelect(
+                        's.months',
+                        'm',
+                        'm.stateId IN (:...states)',
+                        { states: [2, 3] }
+                    )
+                    .where('s.id = :id', { id: budgetNoteDto.schoolId })
+                    // .andWhere('m.stateId IN (:...states)', { states: [2, 3] })
+                    .getOne()
+            ).months;
+
+            if (!months.length)
+                throw new ConflictException(
+                    'No hay periodos creados o abiertos actualmente para la institución'
+                );
+
+            budgetNoteDto.monthId = months[0].id;
 
             const budgetNote = await connection
                 .getRepository(BudgetNote)

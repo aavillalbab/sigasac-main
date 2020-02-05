@@ -4,6 +4,8 @@ import { BudgetNoteDetailDto } from './index';
 export class BudgetNoteDto {
     schoolId: number;
 
+    monthId: number;
+
     @ApiProperty()
     noteDate: string;
 
