@@ -67,7 +67,7 @@ export class BudgetNotesService {
                 .leftJoinAndSelect('bn.subconcept', 'subconcept')
                 .leftJoinAndSelect('bn.thirdParty', 'thirdParty')
                 .leftJoinAndSelect('bn.budgetNotesDetail', 'bnd')
-                .leftJoinAndSelect('bnd.budgetAccount', 'budgetAccount')
+                .leftJoinAndSelect('bnd.singleAccountPlan', 'singleAccountPlan')
                 .leftJoinAndSelect('bnd.campus', 'campus')
                 .leftJoinAndSelect('bnd.revenue', 'revenue')
                 .leftJoinAndSelect('bnd.project', 'project')
