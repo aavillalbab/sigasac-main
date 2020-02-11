@@ -92,7 +92,6 @@ export class BudgetNotesService {
                 .createQueryBuilder('bn')
                 .leftJoinAndSelect('bn.concept', 'concept')
                 .leftJoinAndSelect('bn.subconcept', 'subconcept')
-                .leftJoinAndSelect('bn.thirdParty', 'thirdParty')
                 .leftJoinAndSelect('bn.budgetNotesDetail', 'bnd')
                 .leftJoinAndSelect('bnd.singleAccountPlan', 'singleAccountPlan')
                 .leftJoinAndSelect('bnd.campus', 'campus')
