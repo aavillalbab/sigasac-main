@@ -64,14 +64,15 @@ export class SchoolController {
                 }
             );
 
-            // crear mes para el colegio creado
+            // crear anualidad para el colegio creado
             await SigasacRequest.post(
-                `${host}:3003`,
-                'data',
+                `${host}:3005`,
+                'documents',
                 'v1',
-                'months',
+                'annuities',
                 token,
                 {
+                    description: 'Primer año lectivo creado en SIGASAC',
                     startDate: new Date(),
                     schoolId: s.id
                 }
